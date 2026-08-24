@@ -199,3 +199,103 @@ document.querySelectorAll('.stat-number').forEach(stat => {
         statObserver.observe(stat);
     }
 });
+
+// ========================================
+// DARGAH PHOTO CAROUSEL SLIDER
+// ========================================
+function initDargahCarousel() {
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const container = document.querySelector('.carousel-container');
+
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+    let autoSlideTimer = null;
+
+    function showSlide(index) {
+        if (index >= slides.length) currentIndex = 0;
+        else if (index < 0) currentIndex = slides.length - 1;
+        else currentIndex = index;
+
+        slides.forEach((slide, idx) => {
+            slide.classList.toggle('active', idx === currentIndex);
+        });
+
+        dots.forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === currentIndex);
+        });
+    }
+
+    function nextSlide() {
+        showSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentIndex - 1);
+    }
+
+    function startAutoSlide() {
+        stopAutoSlide();
+        autoSlideTimer = setInterval(nextSlide, 4500);
+    }
+
+    function stopAutoSlide() {
+        if (autoSlideTimer) {
+            clearInterval(autoSlideTimer);
+            autoSlideTimer = null;
+        }
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            startAutoSlide();
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startAutoSlide();
+        });
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            showSlide(index);
+            startAutoSlide();
+        });
+    });
+
+    if (container) {
+        container.addEventListener('mouseenter', stopAutoSlide);
+        container.addEventListener('mouseleave', startAutoSlide);
+
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        container.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoSlide();
+        }, { passive: true });
+
+        container.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                nextSlide();
+            } else if (touchEndX - touchStartX > 50) {
+                prevSlide();
+            }
+            startAutoSlide();
+        }, { passive: true });
+    }
+
+    startAutoSlide();
+}
+
+document.addEventListener('DOMContentLoaded', initDargahCarousel);
+initDargahCarousel();
