@@ -106,10 +106,12 @@ header.scrolled {
 }
 
 .logo img {
-    height: 52px;
-    width: 52px;
+    height: 54px;
+    width: auto;
     object-fit: contain;
-    border-radius: 50%;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(212, 175, 55, 0.2);
     animation: logoGlow 3s ease-in-out infinite;
     flex-shrink: 0;
     display: block;
@@ -130,7 +132,7 @@ header.scrolled {
 
 header.scrolled .logo img {
     height: 44px;
-    width: 44px;
+    width: auto;
 }
 
 nav .nav-links {
@@ -627,11 +629,28 @@ footer {
     margin-bottom: 50px;
 }
 
+.footer-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.footer-logo-wrap img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    display: block;
+}
+
 .footer-logo {
     font-family: var(--font-heading);
     color: var(--color-primary-500);
     font-size: var(--font-size-2xl);
-    margin-bottom: 15px;
+    margin-bottom: 0;
 }
 
 .footer-col p {
