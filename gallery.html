@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery | Ali Hotel - Piran Kaliyar, Roorkee</title>
+    <meta name="description" content="Explore real photos of Ali Hotel in Piran Kaliyar, Roorkee - luxury AC rooms, modern lift corridors, bathroom facilities, and Hazrat Sabir Pak Dargah Sharif.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gallery Specific Styles */
+        .gallery-filter-wrap {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 40px 0 35px;
+        }
+
+        .gallery-filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            color: var(--text-color);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-filter-btn:hover,
+        .gallery-filter-btn.active {
+            background: linear-gradient(135deg, #d4af37, #b8941e);
+            color: #030712;
+            border-color: #f5d76e;
+            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            aspect-ratio: 4 / 3;
+        }
+
+        .gallery-item.tall {
+            aspect-ratio: 3 / 4;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(3, 7, 18, 0.95) 0%, rgba(3, 7, 18, 0.3) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-tag {
+            align-self: flex-start;
+            background: rgba(212, 175, 55, 0.25);
+            border: 1px solid rgba(212, 175, 55, 0.6);
+            color: #f5d76e;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .gallery-title {
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-family: var(--font-heading);
+        }
+
+        .gallery-desc {
+            color: #ccc;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .gallery-zoom-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f5d76e;
+            font-size: 0.95rem;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-zoom-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Lightbox Modal */
+        .lightbox-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-img-wrap {
+            position: relative;
+            max-height: 72vh;
+            max-width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+        }
+
+        .lightbox-img {
+            max-height: 72vh;
+            max-width: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .lightbox-info {
+            margin-top: 18px;
+            text-align: center;
+            color: #fff;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .lightbox-title {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            color: #f5d76e;
+            margin-bottom: 6px;
+        }
+
+        .lightbox-desc {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .lightbox-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .lightbox-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #f5d76e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .lightbox-btn:hover {
+            background: #d4af37;
+            color: #030712;
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.5);
+        }
+
+        .lightbox-btn.prev { left: 25px; }
+        .lightbox-btn.next { right: 25px; }
+
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lightbox-close:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .lightbox-btn.prev { left: 10px; width: 40px; height: 40px; font-size: 1rem; }
+            .lightbox-btn.next { right: 10px; width: 40px; height: 40px; font-size: 1rem; }
+            .lightbox-close { top: 15px; right: 15px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.jpg" alt="Ali Hotel Official Logo">
+            <span class="logo-text">Ali Hotel</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fa-solid fa-house golden-icon"></i> Home</a></li>
+                <li><a href="about.html"><i class="fa-solid fa-circle-info golden-icon"></i> About</a></li>
+                <li><a href="rooms.html"><i class="fa-solid fa-bed golden-icon"></i> Rooms</a></li>
+                <li><a href="gallery.html" class="active"><i class="fa-solid fa-images golden-icon"></i> Gallery</a></li>
+                <li><a href="amenities.html"><i class="fa-solid fa-bell-concierge golden-icon"></i> Amenities</a></li>
+                <li><a href="contact.html"><i class="fa-solid fa-envelope golden-icon"></i> Contact</a></li>
+                <li class="mobile-only-btn"><a href="https://wa.me/917017430059" target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366; width:100%; text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Booking</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right">
+            <a href="https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary header-cta"><i class="fa-brands fa-whatsapp"></i> Book on WhatsApp</a>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Title Banner -->
+    <section class="page-banner" style="background: linear-gradient(135deg, rgba(3, 7, 18, 0.85), rgba(3, 7, 18, 0.95)), url('assets/images/real_room_1.jpg'); background-size: cover; background-position: center; padding: 160px 0 70px; text-align: center;">
+        <div class="container">
+            <span class="section-tag center">Visual Tour</span>
+            <h1 style="font-size: 3rem; margin-top: 10px; font-family: var(--font-heading);">Photo Gallery</h1>
+            <p style="color: #cbd5e1; font-size: 1.15rem; max-width: 650px; margin: 10px auto 0;">Real photographs of our luxury AC rooms, modern elevator & corridors, amenities, and sacred Piran Kaliyar Dargah Sharif.</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section style="padding: 50px 0 90px;">
+        <div class="container">
+            
+            <!-- Category Filter Buttons -->
+            <div class="gallery-filter-wrap">
+                <button class="gallery-filter-btn active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All Photos (<span id="count-all">11</span>)</button>
+                <button class="gallery-filter-btn" data-filter="rooms"><i class="fa-solid fa-bed"></i> AC Rooms & Suites</button>
+                <button class="gallery-filter-btn" data-filter="corridor"><i class="fa-solid fa-elevator"></i> Corridors & Lift</button>
+                <button class="gallery-filter-btn" data-filter="dargah"><i class="fa-solid fa-mosque"></i> Dargah Sharif Views</button>
+                <button class="gallery-filter-btn" data-filter="amenities"><i class="fa-solid fa-shower"></i> Facilities & Bathrooms</button>
+            </div>
+
+            <!-- Photos Grid -->
+            <div class="gallery-grid" id="galleryGrid">
+                
+                <!-- 1. Real Room 1 -->
+                <div class="gallery-item" data-category="rooms" data-title="Luxury AC Room with Wall Panel" data-desc="Modern wall finish, comfortable double bed, flat screen TV setup, and sparkling clean ambiance." data-src="assets/images/real_room_1.jpg">
+                    <img src="assets/images/real_room_1.jpg" alt="Luxury AC Room with Wall Panel">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room</span>
+                        <h4 class="gallery-title">Luxury AC Bedroom</h4>
+                        <p class="gallery-desc">King-size comfort with wooden panel styling & TV console</p>
+                    </div>
+                </div>
+
+                <!-- 2. Real Family Room -->
+                <div class="gallery-item" data-category="rooms" data-title="Spacious Family AC Suite" data-desc="Multiple beds for entire family, premium false ceiling with cove lighting, and large airy windows." data-src="assets/images/real_family_room.jpg">
+                    <img src="assets/images/real_family_room.jpg" alt="Spacious Family AC Suite">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Family Suite</span>
+                        <h4 class="gallery-title">Family AC Bedroom</h4>
+                        <p class="gallery-desc">Double bed + single bed with cove LED lighting</p>
+                    </div>
+                </div>
+
+                <!-- 3. Real Corridor & Lift -->
+                <div class="gallery-item tall" data-category="corridor" data-title="Hotel Corridor & Modern Elevator" data-desc="Well-lit spacious corridors with imported marble tiles, wooden room doors, and elevator access on every floor." data-src="assets/images/real_corridor_lift.jpg">
+                    <img src="assets/images/real_corridor_lift.jpg" alt="Hotel Corridor with Lift Access">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Corridor & Lift</span>
+                        <h4 class="gallery-title">Modern Elevator & Hallway</h4>
+                        <p class="gallery-desc">Easy lift access for senior citizens and families</p>
+                    </div>
+                </div>
+
+                <!-- 4. Real Double Room -->
+                <div class="gallery-item" data-category="rooms" data-title="Deluxe Double Bed AC Room" data-desc="Plush velvet headboard, intercom phone, pristine marble walls, and peaceful atmosphere." data-src="assets/images/real_double_room.jpg">
+                    <img src="assets/images/real_double_room.jpg" alt="Deluxe Double Bed AC Room">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Deluxe Room</span>
+                        <h4 class="gallery-title">Deluxe AC Bedroom</h4>
+                        <p class="gallery-desc">Plush velvet bed headboard & 24/7 intercom</p>
+                    </div>
+                </div>
+
+                <!-- 5. Real Corridor Perspective -->
+                <div class="gallery-item" data-category="corridor" data-title="Guest Corridor & Room Entrances" data-desc="Immaculately maintained marble floor hallways with modern warm ceiling cove lighting." data-src="assets/images/real_corridor_view.jpg">
+                    <img src="assets/images/real_corridor_view.jpg" alt="Guest Corridor and Room Entrances">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Corridor</span>
+                        <h4 class="gallery-title">Guest Room Corridor</h4>
+                        <p class="gallery-desc">Bright, safe, and hygienic guest floor passage</p>
+                    </div>
+                </div>
+
+                <!-- 6. 12-Bed Large Family Suite -->
+                <div class="gallery-item" data-category="rooms" data-title="12-Bed Large Group AC Hall" data-desc="Ideal for large pilgrim groups, families, and tour parties visiting Piran Kaliyar together." data-src="assets/images/family_suite_12bed.jpg">
+                    <img src="assets/images/family_suite_12bed.jpg" alt="12-Bed Family Group Suite">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Group Suite</span>
+                        <h4 class="gallery-title">12-Bed Large AC Suite</h4>
+                        <p class="gallery-desc">Grand group accommodation with dedicated AC</p>
+                    </div>
+                </div>
+
+                <!-- 7. Dargah Sharif Wide View -->
+                <div class="gallery-item" data-category="dargah" data-title="Hazrat Sabir Pak Dargah Sharif" data-desc="Holy green dome and courtyard of Hazrat Makhdoom Alauddin Ali Ahmed Sabir Kalyari (500m from Ali Hotel)." data-src="assets/images/dargah1.jpg">
+                    <img src="assets/images/dargah1.jpg" alt="Piran Kaliyar Dargah Sharif Dome">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Dargah Sharif</span>
+                        <h4 class="gallery-title">Hazrat Sabir Pak Dargah</h4>
+                        <p class="gallery-desc">Sacred shrine just 500 meters walking distance</p>
+                    </div>
+                </div>
+
+                <!-- 8. Dargah Dome & Sky -->
+                <div class="gallery-item" data-category="dargah" data-title="Dargah Sacred Dome & Islamic Crescent" data-desc="Spiritual architectural view of the holy shrine dome with Islamic flags." data-src="assets/images/dargah2.jpg">
+                    <img src="assets/images/dargah2.jpg" alt="Dargah Dome and Crescent">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Dargah Sharif</span>
+                        <h4 class="gallery-title">Sacred Green Dome</h4>
+                        <p class="gallery-desc">Spiritual beauty under clear skies</p>
+                    </div>
+                </div>
+
+                <!-- 9. Dargah Courtyard Reflections -->
+                <div class="gallery-item" data-category="dargah" data-title="Dargah Sacred Courtyard Facade" data-desc="Intricate floral jaali architecture and peaceful reflection of the sacred sanctum." data-src="assets/images/dargah3.jpg">
+                    <img src="assets/images/dargah3.jpg" alt="Dargah Courtyard Facade">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Dargah Sharif</span>
+                        <h4 class="gallery-title">Sacred Courtyard Facade</h4>
+                        <p class="gallery-desc">Historic sanctum gates and peaceful marble floor</p>
+                    </div>
+                </div>
+
+                <!-- 10. Dargah Ziyarat Entrance -->
+                <div class="gallery-item" data-category="dargah" data-title="Pilgrims at Sacred Shrine Gate" data-desc="Devotees offering prayers and seeking blessings at the entrance of Sabir Piya's court." data-src="assets/images/dargah4.jpg">
+                    <img src="assets/images/dargah4.jpg" alt="Pilgrims at Dargah Gate">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Dargah Sharif</span>
+                        <h4 class="gallery-title">Ziyarat Gate & Pilgrims</h4>
+                        <p class="gallery-desc">Spiritual blessings and ziyarat</p>
+                    </div>
+                </div>
+
+                <!-- 11. Attached Clean Western Bathroom -->
+                <div class="gallery-item" data-category="amenities" data-title="Attached Clean Western Bathroom" data-desc="Modern Western commode, hot & cold geyser water, fresh towels, and hygienic sanitary fittings." data-src="assets/images/bathroom.jpg">
+                    <img src="assets/images/bathroom.jpg" alt="Attached Clean Bathroom">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Amenities</span>
+                        <h4 class="gallery-title">Attached Western Bathroom</h4>
+                        <p class="gallery-desc">24/7 Hot water geyser & clean sanitary fittings</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom CTA -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; padding: 40px 30px; text-align: center;">
+                <h3 style="font-size: 1.8rem; font-family: var(--font-heading); color: #fff; margin-bottom: 10px;">Want to book any of these rooms?</h3>
+                <p style="color: #aaa; margin-bottom: 25px;">Contact the owners directly on WhatsApp or Call for the best rates and instant confirmation.</p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20saw%20your%20photo%20gallery%20and%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366;"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+                    <a href="tel:+917017430059" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call Haji Azad Ali: 7017430059</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Fullscreen Lightbox Modal -->
+    <div class="lightbox-modal" id="lightboxModal">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close Lightbox"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lightbox-btn prev" id="lightboxPrev" aria-label="Previous Image"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lightbox-btn next" id="lightboxNext" aria-label="Next Image"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="lightbox-content">
+            <div class="lightbox-img-wrap">
+                <img src="" alt="" class="lightbox-img" id="lightboxImg">
+            </div>
+            <div class="lightbox-info">
+                <h3 class="lightbox-title" id="lightboxTitle"></h3>
+                <p class="lightbox-desc" id="lightboxDesc"></p>
+                <div class="lightbox-actions">
+                    <a href="#" id="lightboxWhatsApp" target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366; padding: 8px 18px; font-size: 0.9rem;"><i class="fa-brands fa-whatsapp"></i> Book This Room on WhatsApp</a>
+                    <a href="tel:+917017430059" class="btn btn-outline" style="padding: 8px 18px; font-size: 0.9rem;"><i class="fa-solid fa-phone"></i> Call: 7017430059</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo-wrap">
+                        <img src="assets/images/logo.jpg" alt="Ali Hotel Official Logo">
+                        <h3 class="footer-logo">Ali Hotel</h3>
+                    </div>
+                    <p>A Luxury & Family AC Stay in Piran Kaliyar, Roorkee. 18 Fully Air-Conditioned Rooms with 24/7 service, modern lift, and family comfort.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="rooms.html">Rooms & Suites</a></li>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="amenities.html">Amenities</a></li>
+                        <li><a href="contact.html">Contact & Location</a></li>
+                        <li><a href="admin.html" style="color: #d4af37;"><i class="fa-solid fa-lock"></i> Admin Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <p><i class="fa-solid fa-location-dot" style="color: #d4af37;"></i> Near VIP Chowk, Sohalpur Road<br>Piran Kaliyar Shareef, Roorkee - 247667 (UK)</p>
+                    <p><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 7017430059 (Haji Azad Ali)<br><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 7017934425 (Mohd Shadab)<br><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 8077474290 (Haji Abdul Samad)</p>
+                    <p><i class="fa-solid fa-envelope" style="color: #d4af37;"></i> alihotelpirankaliyar@gmail.com</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Direct WhatsApp</h4>
+                    <div class="social-links">
+                        <a href="https://wa.me/917017430059" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> Chat on WhatsApp</a>
+                        <a href="tel:+917017430059"><i class="fa-solid fa-phone" style="color:#d4af37;"></i> Call Now</a>
+                        <a href="https://share.google/wbQLk41U9Xn9ircUh" target="_blank"><i class="fa-brands fa-google" style="color:#4285F4;"></i> Google Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ali Hotel (Piran Kaliyar, Roorkee). All rights reserved. | <a href="admin.html" style="color: #888; text-decoration: none;">Admin Access</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Quick Chat Button -->
+    <a href="https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20room%20booking." target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="floating-whatsapp-tooltip">Chat with us on WhatsApp</span>
+    </a>
+
+    <script src="script.js"></script>
+    <script>
+        // Gallery Filter & Lightbox Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const modal = document.getElementById('lightboxModal');
+            const modalImg = document.getElementById('lightboxImg');
+            const modalTitle = document.getElementById('lightboxTitle');
+            const modalDesc = document.getElementById('lightboxDesc');
+            const modalWhatsApp = document.getElementById('lightboxWhatsApp');
+            const closeBtn = document.getElementById('lightboxClose');
+            const prevBtn = document.getElementById('lightboxPrev');
+            const nextBtn = document.getElementById('lightboxNext');
+
+            let currentVisibleItems = Array.from(galleryItems);
+            let currentIndex = 0;
+
+            // Filter logic
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.getAttribute('data-filter');
+
+                    currentVisibleItems = [];
+                    galleryItems.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            item.style.display = 'block';
+                            currentVisibleItems.push(item);
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Open Lightbox
+            function openLightbox(index) {
+                if (currentVisibleItems.length === 0) return;
+                currentIndex = (index + currentVisibleItems.length) % currentVisibleItems.length;
+                const item = currentVisibleItems[currentIndex];
+                const src = item.getAttribute('data-src');
+                const title = item.getAttribute('data-title');
+                const desc = item.getAttribute('data-desc');
+
+                modalImg.src = src;
+                modalImg.alt = title;
+                modalTitle.textContent = title;
+                modalDesc.textContent = desc;
+                modalWhatsApp.href = `https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20booking%20this%20room:%20${encodeURIComponent(title)}`;
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            galleryItems.forEach((item) => {
+                item.addEventListener('click', () => {
+                    const idx = currentVisibleItems.indexOf(item);
+                    if (idx !== -1) openLightbox(idx);
+                });
+            });
+
+            closeBtn.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', () => openLightbox(currentIndex - 1));
+            nextBtn.addEventListener('click', () => openLightbox(currentIndex + 1));
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeLightbox();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!modal.classList.contains('active')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') openLightbox(currentIndex - 1);
+                if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
+            });
+        });
+    </script>
+</body>
+</html>

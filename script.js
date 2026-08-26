@@ -140,14 +140,43 @@ document.querySelectorAll('.room-grid, .amenities-grid, .amenities-grid-home, .t
     gridObserver.observe(grid);
 });
 
-// Contact form submission
+// Contact / Booking form submission with CMS CRM Lead Capture
 const bookingForm = document.getElementById('booking-form');
 if (bookingForm) {
     bookingForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const submitBtn = bookingForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = '✓ Request Submitted!';
+
+        // Capture Form Data for Super Admin CRM
+        try {
+            const name = document.getElementById('name') ? document.getElementById('name').value : 'Guest';
+            const phone = document.getElementById('phone') ? document.getElementById('phone').value : '';
+            const roomType = document.getElementById('room-type') ? document.getElementById('room-type').value : 'Standard AC Room';
+            const checkIn = document.getElementById('check-in') ? document.getElementById('check-in').value : new Date().toISOString().slice(0,10);
+            const guests = document.getElementById('guests') ? document.getElementById('guests').value : '2 Guests';
+
+            // Retrieve from LocalStorage
+            const stored = localStorage.getItem('ali_hotel_cms_db');
+            let db = stored ? JSON.parse(stored) : null;
+            if (db && db.inquiries) {
+                db.inquiries.unshift({
+                    id: 'inq_' + Date.now(),
+                    name,
+                    phone,
+                    roomType,
+                    checkIn,
+                    guests,
+                    dateReceived: new Date().toISOString().slice(0,10),
+                    status: 'pending'
+                });
+                localStorage.setItem('ali_hotel_cms_db', JSON.stringify(db));
+            }
+        } catch (err) {
+            console.error('Lead storage error', err);
+        }
+
+        submitBtn.textContent = '✓ Inquiry Sent to Hotel!';
         submitBtn.style.background = '#10b981';
         submitBtn.style.borderColor = '#10b981';
         submitBtn.disabled = true;
@@ -158,9 +187,39 @@ if (bookingForm) {
             submitBtn.style.borderColor = '';
             submitBtn.disabled = false;
             bookingForm.reset();
-        }, 3000);
+        }, 3500);
     });
 }
+
+// Render CMS Announcement Bar on Public Pages
+function initCmsAnnouncement() {
+    try {
+        const stored = localStorage.getItem('ali_hotel_cms_db');
+        if (!stored) return;
+        const db = JSON.parse(stored);
+        if (db.announcement && db.announcement.enabled && !sessionStorage.getItem('ali_announcement_closed')) {
+            const banner = document.createElement('div');
+            banner.className = 'top-announcement-bar';
+            banner.innerHTML = `
+                <i class="fa-solid fa-sparkles" style="color:#f5d76e;"></i>
+                <span>${db.announcement.text}</span>
+                ${db.announcement.couponCode ? `<span class="promo-badge">PROMO: ${db.announcement.couponCode}</span>` : ''}
+                <button class="close-announcement" aria-label="Close Announcement">&times;</button>
+            `;
+
+            document.body.prepend(banner);
+
+            banner.querySelector('.close-announcement').addEventListener('click', () => {
+                banner.remove();
+                sessionStorage.setItem('ali_announcement_closed', 'true');
+            });
+        }
+    } catch (e) {
+        console.error('Announcement bar error', e);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initCmsAnnouncement);
 
 // Smooth counter animation for stats
 function animateCounter(element, target) {
