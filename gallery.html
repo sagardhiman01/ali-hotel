@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery | Ali Hotel - Piran Kaliyar, Roorkee</title>
-    <meta name="description" content="Explore real photos of Ali Hotel in Piran Kaliyar, Roorkee - luxury AC rooms, modern lift corridors, bathroom facilities, and Hazrat Sabir Pak Dargah Sharif.">
+    <meta name="description" content="Explore real photos of Ali Hotel in Piran Kaliyar, Roorkee - luxury AC rooms, modern lift corridors, marble staircase, cove lighting, and bathroom facilities.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,16 +69,15 @@
 
         .gallery-item:hover {
             transform: translateY(-6px);
-            border-color: rgba(212, 175, 55, 0.6);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+            box-shadow: 0 14px 35px rgba(212, 175, 55, 0.25);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            display: block;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .gallery-item:hover img {
@@ -87,61 +86,59 @@
 
         .gallery-overlay {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(3, 7, 18, 0.95) 0%, rgba(3, 7, 18, 0.3) 50%, transparent 100%);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 18px 16px;
+            background: linear-gradient(to top, rgba(3, 7, 18, 0.95) 0%, rgba(3, 7, 18, 0.7) 60%, transparent 100%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 24px;
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
+            transition: all 0.3s ease;
         }
 
         .gallery-tag {
+            display: inline-block;
             align-self: flex-start;
-            background: rgba(212, 175, 55, 0.25);
-            border: 1px solid rgba(212, 175, 55, 0.6);
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
             color: #f5d76e;
             font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 8px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
 
         .gallery-title {
             color: #fff;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 6px;
-            font-family: var(--font-heading);
+            margin-bottom: 3px;
         }
 
         .gallery-desc {
-            color: #ccc;
-            font-size: 0.85rem;
-            line-height: 1.4;
+            color: #cbd5e1;
+            font-size: 0.82rem;
+            line-height: 1.3;
         }
 
         .gallery-zoom-icon {
             position: absolute;
             top: 15px;
             right: 15px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(17, 24, 39, 0.85);
+            width: 38px;
+            height: 38px;
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(8px);
             border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #f5d76e;
+            color: #d4af37;
             font-size: 0.95rem;
             opacity: 0;
             transform: scale(0.8);
@@ -156,17 +153,19 @@
         /* Lightbox Modal */
         .lightbox-modal {
             position: fixed;
-            inset: 0;
-            background: rgba(3, 7, 18, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(3, 7, 18, 0.96);
+            backdrop-filter: blur(14px);
+            z-index: 999999;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
             opacity: 0;
             transition: opacity 0.3s ease;
+            padding: 20px;
         }
 
         .lightbox-modal.active {
@@ -176,8 +175,8 @@
 
         .lightbox-content {
             position: relative;
-            max-width: 90vw;
-            max-height: 88vh;
+            max-width: 92vw;
+            max-height: 92vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -185,8 +184,6 @@
 
         .lightbox-img-wrap {
             position: relative;
-            max-height: 72vh;
-            max-width: 100%;
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid rgba(212, 175, 55, 0.4);
@@ -241,26 +238,31 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
 
         .lightbox-btn:hover {
             background: #d4af37;
             color: #030712;
-            box-shadow: 0 0 18px rgba(212, 175, 55, 0.5);
+            transform: translateY(-50%) scale(1.1);
         }
 
-        .lightbox-btn.prev { left: 25px; }
-        .lightbox-btn.next { right: 25px; }
+        .lightbox-btn.prev {
+            left: 20px;
+        }
+
+        .lightbox-btn.next {
+            right: 20px;
+        }
 
         .lightbox-close {
             position: absolute;
             top: 25px;
             right: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.4);
             color: #fff;
             width: 44px;
             height: 44px;
@@ -303,13 +305,15 @@
                 <li><a href="gallery.html" class="active"><i class="fa-solid fa-images golden-icon"></i> Gallery</a></li>
                 <li><a href="amenities.html"><i class="fa-solid fa-bell-concierge golden-icon"></i> Amenities</a></li>
                 <li><a href="contact.html"><i class="fa-solid fa-envelope golden-icon"></i> Contact</a></li>
-                <li class="mobile-only-btn"><a href="https://wa.me/917017430059" target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366; width:100%; text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Booking</a></li>
+                <li class="mobile-only-btn"><a href="https://wa.me/918077474290" target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366; width:100%; text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Booking</a></li>
             </ul>
         </nav>
         <div class="nav-right">
-            <a href="https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary header-cta"><i class="fa-brands fa-whatsapp"></i> Book on WhatsApp</a>
-            <div class="menu-toggle" id="menuToggle">
-                <i class="fa-solid fa-bars"></i>
+            <a href="https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary header-cta"><i class="fa-brands fa-whatsapp"></i> Book on WhatsApp</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </div>
     </header>
@@ -319,7 +323,7 @@
         <div class="container">
             <span class="section-tag center">Visual Tour</span>
             <h1 style="font-size: 3rem; margin-top: 10px; font-family: var(--font-heading);">Photo Gallery</h1>
-            <p style="color: #cbd5e1; font-size: 1.15rem; max-width: 650px; margin: 10px auto 0;">Real photographs of our luxury AC rooms, modern elevator & corridors, amenities, and sacred Piran Kaliyar Dargah Sharif.</p>
+            <p style="color: #cbd5e1; font-size: 1.15rem; max-width: 650px; margin: 10px auto 0;">Real photographs of our luxury AC rooms, marble staircase, modern elevator, designer cove lighting, and guest amenities.</p>
         </div>
     </section>
 
@@ -329,17 +333,72 @@
             
             <!-- Category Filter Buttons -->
             <div class="gallery-filter-wrap">
-                <button class="gallery-filter-btn active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All Photos (<span id="count-all">11</span>)</button>
+                <button class="gallery-filter-btn active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All Photos (<span id="count-all">12</span>)</button>
                 <button class="gallery-filter-btn" data-filter="rooms"><i class="fa-solid fa-bed"></i> AC Rooms & Suites</button>
                 <button class="gallery-filter-btn" data-filter="corridor"><i class="fa-solid fa-elevator"></i> Corridors & Lift</button>
-                <button class="gallery-filter-btn" data-filter="dargah"><i class="fa-solid fa-mosque"></i> Dargah Sharif Views</button>
+                <button class="gallery-filter-btn" data-filter="interior"><i class="fa-solid fa-stairs"></i> Stairs & Architecture</button>
                 <button class="gallery-filter-btn" data-filter="amenities"><i class="fa-solid fa-shower"></i> Facilities & Bathrooms</button>
             </div>
 
             <!-- Photos Grid -->
             <div class="gallery-grid" id="galleryGrid">
                 
-                <!-- 1. Real Room 1 -->
+                <!-- 1. Real Triple Room -->
+                <div class="gallery-item" data-category="rooms" data-title="Deluxe Triple Bed AC Room" data-desc="Spacious bedroom with double bed + single bed, marble wall cladding, and warm designer false ceiling cove lights." data-src="assets/images/real_triple_room.jpg">
+                    <img src="assets/images/real_triple_room.jpg" alt="Deluxe Triple Bed AC Room">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Deluxe Room</span>
+                        <h4 class="gallery-title">Deluxe Triple Bed AC Room</h4>
+                        <p class="gallery-desc">Double bed + single bed with warm cove lighting</p>
+                    </div>
+                </div>
+
+                <!-- 2. Grand Family 5-Bed Suite -->
+                <div class="gallery-item" data-category="rooms" data-title="Super Deluxe 5-Bed Family Suite" data-desc="Expansive family hall with plush olive green headboards, fresh linens, multiple beds, and silent split AC cooling." data-src="assets/images/real_family_suite_5bed.jpg">
+                    <img src="assets/images/real_family_suite_5bed.jpg" alt="Super Deluxe 5-Bed Family Suite">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Family Suite</span>
+                        <h4 class="gallery-title">5-Bed Grand Family Suite</h4>
+                        <p class="gallery-desc">Plush cushioned headboards & spacious marble layout</p>
+                    </div>
+                </div>
+
+                <!-- 3. Real Staircase -->
+                <div class="gallery-item tall" data-category="interior" data-title="Grand Marble Staircase" data-desc="Elegantly designed marble staircase with polished wood wall cladding, gold trims, and recessed step illumination." data-src="assets/images/real_stairs_view.jpg">
+                    <img src="assets/images/real_stairs_view.jpg" alt="Grand Marble Staircase">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Interior Design</span>
+                        <h4 class="gallery-title">Grand Marble Staircase</h4>
+                        <p class="gallery-desc">Wooden panelling, gold trim & wide marble steps</p>
+                    </div>
+                </div>
+
+                <!-- 4. Real Room TV Panel -->
+                <div class="gallery-item" data-category="rooms" data-title="Deluxe Room with Modern TV Wall" data-desc="Fluted wooden TV wall panel, silent split air-conditioner, king bed, and daily room maintenance." data-src="assets/images/real_room_tv_panel.jpg">
+                    <img src="assets/images/real_room_tv_panel.jpg" alt="Deluxe Room with Modern TV Wall">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room</span>
+                        <h4 class="gallery-title">Modern TV Console & AC</h4>
+                        <p class="gallery-desc">Wood-fluted media panel with split air conditioner</p>
+                    </div>
+                </div>
+
+                <!-- 5. Designer Cove Ceiling -->
+                <div class="gallery-item" data-category="interior" data-title="Designer False Ceiling & Split AC" data-desc="Modern dual-layer curved false ceiling with warm ambient LED cove lights and powerful split cooling." data-src="assets/images/real_cove_ceiling.jpg">
+                    <img src="assets/images/real_cove_ceiling.jpg" alt="Designer False Ceiling & Split AC">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Architecture</span>
+                        <h4 class="gallery-title">Ambient False Ceiling</h4>
+                        <p class="gallery-desc">Warm LED cove illumination & split AC system</p>
+                    </div>
+                </div>
+
+                <!-- 6. Real Room 1 -->
                 <div class="gallery-item" data-category="rooms" data-title="Luxury AC Room with Wall Panel" data-desc="Modern wall finish, comfortable double bed, flat screen TV setup, and sparkling clean ambiance." data-src="assets/images/real_room_1.jpg">
                     <img src="assets/images/real_room_1.jpg" alt="Luxury AC Room with Wall Panel">
                     <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
@@ -350,18 +409,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Real Family Room -->
-                <div class="gallery-item" data-category="rooms" data-title="Spacious Family AC Suite" data-desc="Multiple beds for entire family, premium false ceiling with cove lighting, and large airy windows." data-src="assets/images/real_family_room.jpg">
-                    <img src="assets/images/real_family_room.jpg" alt="Spacious Family AC Suite">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Family Suite</span>
-                        <h4 class="gallery-title">Family AC Bedroom</h4>
-                        <p class="gallery-desc">Double bed + single bed with cove LED lighting</p>
-                    </div>
-                </div>
-
-                <!-- 3. Real Corridor & Lift -->
+                <!-- 7. Real Corridor & Lift -->
                 <div class="gallery-item tall" data-category="corridor" data-title="Hotel Corridor & Modern Elevator" data-desc="Well-lit spacious corridors with imported marble tiles, wooden room doors, and elevator access on every floor." data-src="assets/images/real_corridor_lift.jpg">
                     <img src="assets/images/real_corridor_lift.jpg" alt="Hotel Corridor with Lift Access">
                     <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
@@ -372,7 +420,7 @@
                     </div>
                 </div>
 
-                <!-- 4. Real Double Room -->
+                <!-- 8. Real Double Room -->
                 <div class="gallery-item" data-category="rooms" data-title="Deluxe Double Bed AC Room" data-desc="Plush velvet headboard, intercom phone, pristine marble walls, and peaceful atmosphere." data-src="assets/images/real_double_room.jpg">
                     <img src="assets/images/real_double_room.jpg" alt="Deluxe Double Bed AC Room">
                     <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
@@ -383,7 +431,7 @@
                     </div>
                 </div>
 
-                <!-- 5. Real Corridor Perspective -->
+                <!-- 9. Real Corridor Perspective -->
                 <div class="gallery-item" data-category="corridor" data-title="Guest Corridor & Room Entrances" data-desc="Immaculately maintained marble floor hallways with modern warm ceiling cove lighting." data-src="assets/images/real_corridor_view.jpg">
                     <img src="assets/images/real_corridor_view.jpg" alt="Guest Corridor and Room Entrances">
                     <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
@@ -394,7 +442,18 @@
                     </div>
                 </div>
 
-                <!-- 6. 12-Bed Large Family Suite -->
+                <!-- 10. Real Family Room -->
+                <div class="gallery-item" data-category="rooms" data-title="Spacious Family AC Suite" data-desc="Multiple beds for entire family, premium false ceiling with cove lighting, and large airy windows." data-src="assets/images/real_family_room.jpg">
+                    <img src="assets/images/real_family_room.jpg" alt="Spacious Family AC Suite">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Family Suite</span>
+                        <h4 class="gallery-title">Family AC Bedroom</h4>
+                        <p class="gallery-desc">Double bed + single bed with cove LED lighting</p>
+                    </div>
+                </div>
+
+                <!-- 11. 12-Bed Large Family Suite -->
                 <div class="gallery-item" data-category="rooms" data-title="12-Bed Large Group AC Hall" data-desc="Ideal for large pilgrim groups, families, and tour parties visiting Piran Kaliyar together." data-src="assets/images/family_suite_12bed.jpg">
                     <img src="assets/images/family_suite_12bed.jpg" alt="12-Bed Family Group Suite">
                     <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
@@ -405,51 +464,7 @@
                     </div>
                 </div>
 
-                <!-- 7. Dargah Sharif Wide View -->
-                <div class="gallery-item" data-category="dargah" data-title="Hazrat Sabir Pak Dargah Sharif" data-desc="Holy green dome and courtyard of Hazrat Makhdoom Alauddin Ali Ahmed Sabir Kalyari (500m from Ali Hotel)." data-src="assets/images/dargah1.jpg">
-                    <img src="assets/images/dargah1.jpg" alt="Piran Kaliyar Dargah Sharif Dome">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Dargah Sharif</span>
-                        <h4 class="gallery-title">Hazrat Sabir Pak Dargah</h4>
-                        <p class="gallery-desc">Sacred shrine just 500 meters walking distance</p>
-                    </div>
-                </div>
-
-                <!-- 8. Dargah Dome & Sky -->
-                <div class="gallery-item" data-category="dargah" data-title="Dargah Sacred Dome & Islamic Crescent" data-desc="Spiritual architectural view of the holy shrine dome with Islamic flags." data-src="assets/images/dargah2.jpg">
-                    <img src="assets/images/dargah2.jpg" alt="Dargah Dome and Crescent">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Dargah Sharif</span>
-                        <h4 class="gallery-title">Sacred Green Dome</h4>
-                        <p class="gallery-desc">Spiritual beauty under clear skies</p>
-                    </div>
-                </div>
-
-                <!-- 9. Dargah Courtyard Reflections -->
-                <div class="gallery-item" data-category="dargah" data-title="Dargah Sacred Courtyard Facade" data-desc="Intricate floral jaali architecture and peaceful reflection of the sacred sanctum." data-src="assets/images/dargah3.jpg">
-                    <img src="assets/images/dargah3.jpg" alt="Dargah Courtyard Facade">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Dargah Sharif</span>
-                        <h4 class="gallery-title">Sacred Courtyard Facade</h4>
-                        <p class="gallery-desc">Historic sanctum gates and peaceful marble floor</p>
-                    </div>
-                </div>
-
-                <!-- 10. Dargah Ziyarat Entrance -->
-                <div class="gallery-item" data-category="dargah" data-title="Pilgrims at Sacred Shrine Gate" data-desc="Devotees offering prayers and seeking blessings at the entrance of Sabir Piya's court." data-src="assets/images/dargah4.jpg">
-                    <img src="assets/images/dargah4.jpg" alt="Pilgrims at Dargah Gate">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Dargah Sharif</span>
-                        <h4 class="gallery-title">Ziyarat Gate & Pilgrims</h4>
-                        <p class="gallery-desc">Spiritual blessings and ziyarat</p>
-                    </div>
-                </div>
-
-                <!-- 11. Attached Clean Western Bathroom -->
+                <!-- 12. Attached Clean Western Bathroom -->
                 <div class="gallery-item" data-category="amenities" data-title="Attached Clean Western Bathroom" data-desc="Modern Western commode, hot & cold geyser water, fresh towels, and hygienic sanitary fittings." data-src="assets/images/bathroom.jpg">
                     <img src="assets/images/bathroom.jpg" alt="Attached Clean Bathroom">
                     <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
@@ -467,8 +482,9 @@
                 <h3 style="font-size: 1.8rem; font-family: var(--font-heading); color: #fff; margin-bottom: 10px;">Want to book any of these rooms?</h3>
                 <p style="color: #aaa; margin-bottom: 25px;">Contact the owners directly on WhatsApp or Call for the best rates and instant confirmation.</p>
                 <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <a href="https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20saw%20your%20photo%20gallery%20and%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366;"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
-                    <a href="tel:+917017430059" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call Haji Azad Ali: 7017430059</a>
+                    <a href="https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20saw%20your%20photo%20gallery%20and%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366;"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+                    <a href="tel:+918077474290" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call: 8077474290</a>
+                    <a href="tel:+917017934425" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call: 7017934425</a>
                 </div>
             </div>
 
@@ -490,7 +506,7 @@
                 <p class="lightbox-desc" id="lightboxDesc"></p>
                 <div class="lightbox-actions">
                     <a href="#" id="lightboxWhatsApp" target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366; padding: 8px 18px; font-size: 0.9rem;"><i class="fa-brands fa-whatsapp"></i> Book This Room on WhatsApp</a>
-                    <a href="tel:+917017430059" class="btn btn-outline" style="padding: 8px 18px; font-size: 0.9rem;"><i class="fa-solid fa-phone"></i> Call: 7017430059</a>
+                    <a href="tel:+918077474290" class="btn btn-outline" style="padding: 8px 18px; font-size: 0.9rem;"><i class="fa-solid fa-phone"></i> Call: 8077474290</a>
                 </div>
             </div>
         </div>
@@ -522,14 +538,14 @@
                 <div class="footer-col">
                     <h4>Contact Info</h4>
                     <p><i class="fa-solid fa-location-dot" style="color: #d4af37;"></i> Near VIP Chowk, Sohalpur Road<br>Piran Kaliyar Shareef, Roorkee - 247667 (UK)</p>
-                    <p><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 7017430059 (Haji Azad Ali)<br><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 7017934425 (Mohd Shadab)<br><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 8077474290 (Haji Abdul Samad)</p>
+                    <p><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 8077474290 (Haji Abdul Samad)<br><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 7017934425 (Mohd Shadab)</p>
                     <p><i class="fa-solid fa-envelope" style="color: #d4af37;"></i> alihotelpirankaliyar@gmail.com</p>
                 </div>
                 <div class="footer-col">
                     <h4>Direct WhatsApp</h4>
                     <div class="social-links">
-                        <a href="https://wa.me/917017430059" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> Chat on WhatsApp</a>
-                        <a href="tel:+917017430059"><i class="fa-solid fa-phone" style="color:#d4af37;"></i> Call Now</a>
+                        <a href="https://wa.me/918077474290" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> Chat on WhatsApp</a>
+                        <a href="tel:+918077474290"><i class="fa-solid fa-phone" style="color:#d4af37;"></i> Call Now</a>
                         <a href="https://share.google/wbQLk41U9Xn9ircUh" target="_blank"><i class="fa-brands fa-google" style="color:#4285F4;"></i> Google Profile</a>
                     </div>
                 </div>
@@ -541,7 +557,7 @@
     </footer>
 
     <!-- Floating WhatsApp Quick Chat Button -->
-    <a href="https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20room%20booking." target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20room%20booking." target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
         <span class="floating-whatsapp-tooltip">Chat with us on WhatsApp</span>
     </a>
@@ -597,7 +613,7 @@
                 modalImg.alt = title;
                 modalTitle.textContent = title;
                 modalDesc.textContent = desc;
-                modalWhatsApp.href = `https://wa.me/917017430059?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20booking%20this%20room:%20${encodeURIComponent(title)}`;
+                modalWhatsApp.href = `https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20booking%20this%20room:%20${encodeURIComponent(title)}`;
 
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';

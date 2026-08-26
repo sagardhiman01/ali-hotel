@@ -6,22 +6,20 @@
 const DEFAULT_HOTEL_DATA = {
     auth: {
         passcode: "ali@2026", // Default super admin passcode
-        backupPasscode: "7017430059"
+        backupPasscode: "8077474290"
     },
     general: {
         hotelName: "Ali Hotel",
         tagline: "A Luxury & Family AC Stay in Piran Kaliyar, Roorkee",
         roomCount: "18",
-        owner1Name: "Haji Azad Ali",
-        owner1Phone: "+91 7017430059",
+        owner1Name: "Haji Abdul Samad",
+        owner1Phone: "+91 8077474290",
         owner2Name: "Mohd Shadab",
         owner2Phone: "+91 7017934425",
-        owner3Name: "Haji Abdul Samad",
-        owner3Phone: "+91 8077474290",
         email: "alihotelpirankaliyar@gmail.com",
         address: "Near VIP Chowk, Sohalpur Road, Piran Kaliyar Shareef, Roorkee - 247667 (UK)",
         googleMapsUrl: "https://share.google/wbQLk41U9Xn9ircUh",
-        whatsappNumber: "917017430059"
+        whatsappNumber: "918077474290"
     },
     announcement: {
         enabled: true,
@@ -41,29 +39,29 @@ const DEFAULT_HOTEL_DATA = {
         },
         {
             id: "room_2",
-            title: "Executive Triple AC Room",
+            title: "Deluxe Triple AC Room",
             price: "1499",
-            beds: "1 King Bed + 1 Single Bed (3 Guests)",
+            beds: "1 Double Bed + 1 Single Bed (3 Guests)",
             badge: "Popular Choice",
-            image: "assets/images/real_double_room.jpg",
+            image: "assets/images/real_triple_room.jpg",
             status: "available",
-            description: "Spacious luxury room with velvet headboard styling, telephone intercom, 24/7 geyser hot water, and lift access."
+            description: "Spacious luxury room with marble walling, warm cove lighting, split AC, 24/7 geyser hot water, and lift access."
         },
         {
             id: "room_3",
             title: "Super Deluxe 5-Bed Family Suite",
             price: "2199",
-            beds: "Double Beds + Single Beds (5-6 Guests)",
+            beds: "Olive Velvet Headboard Beds (5 Guests)",
             badge: "Family Favorite",
-            image: "assets/images/real_family_room.jpg",
+            image: "assets/images/real_family_suite_5bed.jpg",
             status: "available",
-            description: "Spacious interconnected suite designed for families, featuring modern cove ceiling lighting, dual AC, and large windows."
+            description: "Spacious interconnected suite designed for families, featuring plush headboards, silent split AC, and large windows."
         },
         {
             id: "room_4",
             title: "Luxury Large Group AC Hall (12-Bed)",
             price: "3999",
-            beds: "Multiple King & Single Beds (12 Guests)",
+            beds: "Multiple Beds (12 Guests)",
             badge: "Grand Group Suite",
             image: "assets/images/family_suite_12bed.jpg",
             status: "available",
@@ -71,16 +69,16 @@ const DEFAULT_HOTEL_DATA = {
         }
     ],
     gallery: [
-        { id: "g1", title: "Luxury AC Bedroom", category: "rooms", src: "assets/images/real_room_1.jpg", desc: "King comfort with TV console panel" },
-        { id: "g2", title: "Spacious Family AC Suite", category: "rooms", src: "assets/images/real_family_room.jpg", desc: "Cove ceiling lighting & family beds" },
-        { id: "g3", title: "Modern Elevator & Corridor", category: "corridor", src: "assets/images/real_corridor_lift.jpg", desc: "Smooth elevator on every floor" },
-        { id: "g4", title: "Deluxe AC Bedroom", category: "rooms", src: "assets/images/real_double_room.jpg", desc: "Plush velvet bed headboard" },
-        { id: "g5", title: "Guest Room Corridor", category: "corridor", src: "assets/images/real_corridor_view.jpg", desc: "Bright marble floor passage" },
-        { id: "g6", title: "12-Bed Large Group Suite", category: "rooms", src: "assets/images/family_suite_12bed.jpg", desc: "Group pilgrim accommodation" },
-        { id: "g7", title: "Hazrat Sabir Pak Dargah", category: "dargah", src: "assets/images/dargah1.jpg", desc: "Holy green dome 500m away" },
-        { id: "g8", title: "Sacred Green Dome", category: "dargah", src: "assets/images/dargah2.jpg", desc: "Spiritual beauty under clear skies" },
-        { id: "g9", title: "Sacred Courtyard Facade", category: "dargah", src: "assets/images/dargah3.jpg", desc: "Sanctum gates and marble reflections" },
-        { id: "g10", title: "Ziyarat Gate & Pilgrims", category: "dargah", src: "assets/images/dargah4.jpg", desc: "Devotees receiving blessings" },
+        { id: "g1", title: "Deluxe Triple Bed AC Room", category: "rooms", src: "assets/images/real_triple_room.jpg", desc: "Double bed + single bed with warm cove lighting" },
+        { id: "g2", title: "5-Bed Grand Family Suite", category: "rooms", src: "assets/images/real_family_suite_5bed.jpg", desc: "Plush cushioned headboards & spacious marble layout" },
+        { id: "g3", title: "Grand Marble Staircase", category: "interior", src: "assets/images/real_stairs_view.jpg", desc: "Wooden panelling, gold trim & wide marble steps" },
+        { id: "g4", title: "Modern TV Console & AC", category: "rooms", src: "assets/images/real_room_tv_panel.jpg", desc: "Wood-fluted media panel with split air conditioner" },
+        { id: "g5", title: "Ambient False Ceiling", category: "interior", src: "assets/images/real_cove_ceiling.jpg", desc: "Warm LED cove illumination & split AC system" },
+        { id: "g6", title: "Luxury AC Bedroom", category: "rooms", src: "assets/images/real_room_1.jpg", desc: "King comfort with TV console panel" },
+        { id: "g7", title: "Modern Elevator & Hallway", category: "corridor", src: "assets/images/real_corridor_lift.jpg", desc: "Smooth elevator on every floor" },
+        { id: "g8", title: "Deluxe AC Bedroom", category: "rooms", src: "assets/images/real_double_room.jpg", desc: "Plush velvet bed headboard" },
+        { id: "g9", title: "Guest Room Corridor", category: "corridor", src: "assets/images/real_corridor_view.jpg", desc: "Bright marble floor passage" },
+        { id: "g10", title: "12-Bed Large Group Suite", category: "rooms", src: "assets/images/family_suite_12bed.jpg", desc: "Group pilgrim accommodation" },
         { id: "g11", title: "Attached Western Bathroom", category: "amenities", src: "assets/images/bathroom.jpg", desc: "Clean geyser water & Western commode" }
     ],
     inquiries: [
@@ -111,7 +109,7 @@ const DEFAULT_HOTEL_DATA = {
             author: "Mohammad Irfan",
             city: "Delhi",
             rating: 5,
-            text: "Near VIP Chowk location is very peaceful and just 5 mins walking to Dargah Sabir Pak. AC rooms are neat and clean, and Haji Azad Ali is very helpful."
+            text: "Near VIP Chowk location is very peaceful and just 5 mins walking to Dargah Sabir Pak. AC rooms are neat and clean, and hotel management is very helpful."
         },
         {
             id: "rev_2",
@@ -212,7 +210,7 @@ function initAuth() {
         passcodeForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const inputVal = passcodeInput.value.trim();
-            const validCodes = [hotelData.auth.passcode, hotelData.auth.backupPasscode, "ali@2026", "7017430059", "admin123"];
+            const validCodes = [hotelData.auth.passcode, hotelData.auth.backupPasscode, "ali@2026", "8077474290", "7017934425", "admin123"];
 
             if (validCodes.includes(inputVal)) {
                 sessionStorage.setItem("ali_admin_logged_in", "true");
