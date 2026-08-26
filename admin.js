@@ -354,6 +354,9 @@ function loadRoomsTable() {
                 <span class="status-badge ${room.status === 'available' ? 'available' : 'booked'}">${room.status}</span>
             </td>
             <td>
+                <button class="btn-action" onclick="openRoomModal(${index})">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                </button>
                 <button class="btn-action" onclick="toggleRoomStatus(${index})">
                     <i class="fa-solid fa-arrows-rotate"></i> Toggle
                 </button>
@@ -382,28 +385,164 @@ function deleteRoom(index) {
     }
 }
 
-function addNewRoom() {
-    const title = prompt("Enter Room Title (e.g. Premium 4-Bed AC Room):");
-    if (!title) return;
-    const price = prompt("Enter Room Price per night (e.g. 1799):", "1799");
-    const beds = prompt("Enter Bed Capacity (e.g. 2 Double Beds - 4 Guests):", "2 Double Beds");
-    const image = prompt("Enter Image path or URL (e.g. assets/images/real_room_1.jpg):", "assets/images/real_room_1.jpg");
+// ---------------------------------------------------
+// ROOM MODAL LOGIC (IN-PAGE POPUP & FILE UPLOAD)
+// ---------------------------------------------------
+let currentRoomImageData = "assets/images/real_room_1.jpg";
 
-    const newRoom = {
-        id: "room_" + Date.now(),
-        title,
-        price: price || "999",
-        beds: beds || "1 King Bed",
-        badge: "New Room",
-        image: image || "assets/images/real_room_1.jpg",
-        status: "available",
-        description: "Comfortable air-conditioned stay with clean attached bathroom and 24/7 service."
+function openRoomModal(editIndex = -1) {
+    const overlay = document.getElementById("roomModalOverlay");
+    const modalTitle = document.getElementById("roomModalTitle");
+    const editIndexInput = document.getElementById("roomEditIndex");
+    const titleInput = document.getElementById("modalRoomTitle");
+    const priceInput = document.getElementById("modalRoomPrice");
+    const statusSelect = document.getElementById("modalRoomStatus");
+    const bedsSelect = document.getElementById("modalRoomBedsSelect");
+    const bedsCustom = document.getElementById("modalRoomBedsCustom");
+    const badgeSelect = document.getElementById("modalRoomBadge");
+    const descInput = document.getElementById("modalRoomDesc");
+    const previewBox = document.getElementById("roomPreviewBox");
+    const previewImg = document.getElementById("roomPreviewImg");
+
+    editIndexInput.value = editIndex;
+
+    if (editIndex >= 0 && hotelData.rooms[editIndex]) {
+        const r = hotelData.rooms[editIndex];
+        modalTitle.innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#d4af37;"></i> Edit Room: ${r.title}`;
+        titleInput.value = r.title;
+        priceInput.value = r.price;
+        statusSelect.value = r.status || "available";
+        badgeSelect.value = r.badge || "";
+        descInput.value = r.description || "";
+
+        // Check if beds in predefined select
+        const existsInSelect = Array.from(bedsSelect.options).some(o => o.value === r.beds);
+        if (existsInSelect) {
+            bedsSelect.value = r.beds;
+            bedsCustom.style.display = "none";
+        } else {
+            bedsSelect.value = "custom";
+            bedsCustom.style.display = "block";
+            bedsCustom.value = r.beds;
+        }
+
+        currentRoomImageData = r.image || "assets/images/real_room_1.jpg";
+        previewImg.src = currentRoomImageData;
+        previewBox.style.display = "flex";
+    } else {
+        modalTitle.innerHTML = `<i class="fa-solid fa-bed" style="color:#d4af37;"></i> Add New Room`;
+        titleInput.value = "";
+        priceInput.value = "1499";
+        statusSelect.value = "available";
+        bedsSelect.value = "1 Double Bed + 1 Single Bed (3 Guests)";
+        bedsCustom.style.display = "none";
+        badgeSelect.value = "Popular Choice";
+        descInput.value = "Spacious air-conditioned room with clean attached bathroom and 24/7 power backup.";
+        currentRoomImageData = "assets/images/real_triple_room.jpg";
+        previewImg.src = currentRoomImageData;
+        previewBox.style.display = "flex";
+    }
+
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeRoomModal() {
+    const overlay = document.getElementById("roomModalOverlay");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function handleBedsSelectChange(select) {
+    const customInput = document.getElementById("modalRoomBedsCustom");
+    if (select.value === "custom") {
+        customInput.style.display = "block";
+        customInput.focus();
+    } else {
+        customInput.style.display = "none";
+    }
+}
+
+function handleRoomFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        currentRoomImageData = e.target.result;
+        const previewBox = document.getElementById("roomPreviewBox");
+        const previewImg = document.getElementById("roomPreviewImg");
+        previewImg.src = currentRoomImageData;
+        previewBox.style.display = "flex";
+        showToast("Photo loaded from device gallery!");
     };
+    reader.readAsDataURL(file);
+}
 
-    hotelData.rooms.push(newRoom);
+function handleRoomExistingPhotoChange(select) {
+    if (!select.value) return;
+    currentRoomImageData = select.value;
+    const previewBox = document.getElementById("roomPreviewBox");
+    const previewImg = document.getElementById("roomPreviewImg");
+    previewImg.src = currentRoomImageData;
+    previewBox.style.display = "flex";
+}
+
+function removeRoomImage() {
+    currentRoomImageData = "assets/images/real_room_1.jpg";
+    const previewBox = document.getElementById("roomPreviewBox");
+    const previewImg = document.getElementById("roomPreviewImg");
+    previewImg.src = currentRoomImageData;
+}
+
+function handleRoomFormSubmit(event) {
+    event.preventDefault();
+    const editIndex = parseInt(document.getElementById("roomEditIndex").value, 10);
+    const title = document.getElementById("modalRoomTitle").value.trim();
+    const price = document.getElementById("modalRoomPrice").value.trim();
+    const status = document.getElementById("modalRoomStatus").value;
+    const bedsSelect = document.getElementById("modalRoomBedsSelect").value;
+    const bedsCustom = document.getElementById("modalRoomBedsCustom").value.trim();
+    const beds = bedsSelect === "custom" ? (bedsCustom || "Custom Capacity") : bedsSelect;
+    const badge = document.getElementById("modalRoomBadge").value;
+    const description = document.getElementById("modalRoomDesc").value.trim();
+
+    if (!title || !price) {
+        alert("Please enter both Room Title and Price.");
+        return;
+    }
+
+    if (editIndex >= 0 && hotelData.rooms[editIndex]) {
+        hotelData.rooms[editIndex] = {
+            ...hotelData.rooms[editIndex],
+            title,
+            price,
+            status,
+            beds,
+            badge,
+            description,
+            image: currentRoomImageData || hotelData.rooms[editIndex].image
+        };
+        showToast(`Room '${title}' updated!`);
+    } else {
+        const newRoom = {
+            id: "room_" + Date.now(),
+            title,
+            price,
+            beds,
+            badge: badge || "New Room",
+            image: currentRoomImageData || "assets/images/real_room_1.jpg",
+            status: status || "available",
+            description: description || "Comfortable AC stay with attached bathroom."
+        };
+        hotelData.rooms.push(newRoom);
+        showToast(`New Room '${title}' added!`);
+    }
+
     saveHotelData(hotelData);
     loadRoomsTable();
     loadDashboardStats();
+    closeRoomModal();
 }
 
 // ===================================================
@@ -440,24 +579,95 @@ function deleteGalleryPhoto(index) {
     }
 }
 
-function addGalleryPhoto() {
-    const title = prompt("Enter Photo Title (e.g. VIP Room View):");
-    if (!title) return;
-    const src = prompt("Enter Photo URL or path (e.g. assets/images/real_room_1.jpg):", "assets/images/real_room_1.jpg");
-    if (!src) return;
-    const category = prompt("Enter Category ('rooms', 'corridor', 'dargah', 'amenities'):", "rooms");
+// ---------------------------------------------------
+// GALLERY MODAL LOGIC (IN-PAGE POPUP & FILE UPLOAD)
+// ---------------------------------------------------
+let currentGalleryImageData = "assets/images/real_triple_room.jpg";
+
+function openGalleryModal() {
+    const overlay = document.getElementById("galleryModalOverlay");
+    const titleInput = document.getElementById("modalGalleryTitle");
+    const catSelect = document.getElementById("modalGalleryCategory");
+    const descInput = document.getElementById("modalGalleryDesc");
+    const previewBox = document.getElementById("galleryPreviewBox");
+    const previewImg = document.getElementById("galleryPreviewImg");
+
+    titleInput.value = "";
+    catSelect.value = "rooms";
+    descInput.value = "";
+    currentGalleryImageData = "assets/images/real_triple_room.jpg";
+    previewImg.src = currentGalleryImageData;
+    previewBox.style.display = "flex";
+
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeGalleryModal() {
+    const overlay = document.getElementById("galleryModalOverlay");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function handleGalleryFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        currentGalleryImageData = e.target.result;
+        const previewBox = document.getElementById("galleryPreviewBox");
+        const previewImg = document.getElementById("galleryPreviewImg");
+        previewImg.src = currentGalleryImageData;
+        previewBox.style.display = "flex";
+        showToast("Gallery photo selected from mobile files!");
+    };
+    reader.readAsDataURL(file);
+}
+
+function handleGalleryExistingPhotoChange(select) {
+    if (!select.value) return;
+    currentGalleryImageData = select.value;
+    const previewBox = document.getElementById("galleryPreviewBox");
+    const previewImg = document.getElementById("galleryPreviewImg");
+    previewImg.src = currentGalleryImageData;
+    previewBox.style.display = "flex";
+}
+
+function removeGalleryImage() {
+    currentGalleryImageData = "";
+    document.getElementById("galleryPreviewBox").style.display = "none";
+}
+
+function handleGalleryFormSubmit(event) {
+    event.preventDefault();
+    const title = document.getElementById("modalGalleryTitle").value.trim();
+    const category = document.getElementById("modalGalleryCategory").value;
+    const desc = document.getElementById("modalGalleryDesc").value.trim();
+
+    if (!title) {
+        alert("Please enter a Photo Title / Caption.");
+        return;
+    }
+
+    if (!currentGalleryImageData) {
+        alert("Please select a photo from your gallery or choose an existing photo.");
+        return;
+    }
 
     hotelData.gallery.push({
         id: "g_" + Date.now(),
         title,
         category: category || "rooms",
-        src,
-        desc: "High quality authentic view at Ali Hotel."
+        src: currentGalleryImageData,
+        desc: desc || "Real high-quality photograph of Ali Hotel."
     });
 
     saveHotelData(hotelData);
     loadGalleryGrid();
     loadDashboardStats();
+    closeGalleryModal();
+    showToast("New photo added to website gallery!");
 }
 
 // ===================================================
@@ -513,7 +723,7 @@ function exportInquiriesCSV() {
 }
 
 // ===================================================
-// REVIEWS & TESTIMONIALS
+// REVIEWS & TESTIMONIALS (IN-PAGE MODAL)
 // ===================================================
 function loadReviewsList() {
     const list = document.getElementById("adminReviewsList");
@@ -548,24 +758,48 @@ function deleteReview(index) {
     }
 }
 
-function addNewReview() {
-    const author = prompt("Enter Guest Name:");
-    if (!author) return;
-    const city = prompt("Enter Guest City (e.g. Delhi):", "Delhi");
-    const text = prompt("Enter Review text:");
-    if (!text) return;
+function openReviewModal() {
+    const overlay = document.getElementById("reviewModalOverlay");
+    document.getElementById("modalReviewAuthor").value = "";
+    document.getElementById("modalReviewCity").value = "";
+    document.getElementById("modalReviewRating").value = "5";
+    document.getElementById("modalReviewText").value = "";
+
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeReviewModal() {
+    const overlay = document.getElementById("reviewModalOverlay");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+function handleReviewFormSubmit(event) {
+    event.preventDefault();
+    const author = document.getElementById("modalReviewAuthor").value.trim();
+    const city = document.getElementById("modalReviewCity").value.trim();
+    const rating = parseInt(document.getElementById("modalReviewRating").value, 10) || 5;
+    const text = document.getElementById("modalReviewText").value.trim();
+
+    if (!author || !text) {
+        alert("Please fill in author name and review text.");
+        return;
+    }
 
     hotelData.reviews.push({
         id: "rev_" + Date.now(),
         author,
         city: city || "Guest",
-        rating: 5,
+        rating,
         text
     });
 
     saveHotelData(hotelData);
     loadReviewsList();
     loadDashboardStats();
+    closeReviewModal();
+    showToast("Customer review saved!");
 }
 
 // ===================================================
@@ -630,3 +864,4 @@ function resetToFactoryDefaults() {
         window.location.reload();
     }
 }
+
