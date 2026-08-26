@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Reviews & Testimonials | Ali Hotel - Piran Kaliyar, Roorkee</title>
+    <meta name="description" content="Read real reviews from pilgrims and families who stayed at Ali Hotel in Piran Kaliyar, Roorkee. Write and submit your stay feedback directly.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Reviews Page Custom Styles */
+        .reviews-stats-bar {
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            border-radius: 18px;
+            padding: 30px;
+            margin: -40px auto 40px;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            text-align: center;
+        }
+
+        .review-stat-item h3 {
+            font-size: 2.4rem;
+            color: var(--color-primary-500);
+            font-family: var(--font-heading);
+            margin-bottom: 4px;
+        }
+
+        .review-stat-item p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .reviews-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .review-filter-btns {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .review-filter-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            color: #cbd5e1;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .review-filter-btn.active,
+        .review-filter-btn:hover {
+            background: linear-gradient(135deg, #d4af37, #b8941e);
+            color: #030712;
+            border-color: #f5d76e;
+            font-weight: 600;
+        }
+
+        .btn-write-review {
+            background: linear-gradient(135deg, #d4af37, #b8941e);
+            color: #030712;
+            border: 1px solid #f5d76e;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn-write-review:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .public-review-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            padding: 26px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.35s ease;
+            position: relative;
+        }
+
+        .public-review-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primary-500);
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .review-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .review-author-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .review-avatar-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .review-author-name {
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .review-city-badge {
+            color: #94a3b8;
+            font-size: 0.82rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .review-rating-stars {
+            color: #d4af37;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 3px;
+        }
+
+        .review-text-content {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex-grow: 1;
+            font-style: italic;
+        }
+
+        .review-card-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .review-tag-badge {
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #f5d76e;
+            padding: 3px 9px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Interactive Star Rating Selector */
+        .star-picker-wrap {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+
+        .star-picker-wrap i {
+            font-size: 1.8rem;
+            color: #4b5563;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .star-picker-wrap i.active,
+        .star-picker-wrap i.hovered {
+            color: #f5d76e;
+            transform: scale(1.15);
+        }
+
+        /* Modal Overlay */
+        .review-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 7, 18, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .review-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .review-modal-card {
+            background: #111827;
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 550px;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 32px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .review-modal-overlay.active .review-modal-card {
+            transform: scale(1);
+        }
+
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .modal-head h3 {
+            font-family: var(--font-heading);
+            color: #f5d76e;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-modal-btn:hover {
+            background: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        .form-row {
+            margin-bottom: 16px;
+        }
+
+        .form-row label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #f5d76e;
+            margin-bottom: 6px;
+        }
+
+        .form-row input,
+        .form-row select,
+        .form-row textarea {
+            width: 100%;
+            background: #0b0f19;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-row input:focus,
+        .form-row select:focus,
+        .form-row textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-submit-review {
+            background: linear-gradient(135deg, #d4af37, #b8941e);
+            border: 1px solid #f5d76e;
+            color: #030712;
+            padding: 13px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-submit-review:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Success Toast */
+        .review-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #10b981;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 9999999;
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="index.html" class="logo">
+            <img src="assets/images/logo.jpg" alt="Ali Hotel Official Logo">
+            <span class="logo-text">Ali Hotel</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fa-solid fa-house golden-icon"></i> Home</a></li>
+                <li><a href="about.html"><i class="fa-solid fa-circle-info golden-icon"></i> About</a></li>
+                <li><a href="rooms.html"><i class="fa-solid fa-bed golden-icon"></i> Rooms</a></li>
+                <li><a href="gallery.html"><i class="fa-solid fa-images golden-icon"></i> Gallery</a></li>
+                <li><a href="amenities.html"><i class="fa-solid fa-bell-concierge golden-icon"></i> Amenities</a></li>
+                <li><a href="reviews.html" class="active"><i class="fa-solid fa-star golden-icon"></i> Reviews</a></li>
+                <li><a href="contact.html"><i class="fa-solid fa-envelope golden-icon"></i> Contact</a></li>
+                <li class="mobile-only-btn"><a href="https://wa.me/918077474290" target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366; width:100%; text-align:center;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Booking</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right">
+            <button class="btn btn-primary header-cta" onclick="openPublicReviewModal()" style="margin-right:8px;"><i class="fa-solid fa-pen-nib"></i> Write Review</button>
+            <a href="https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary header-cta" style="background:#25D366; border-color:#25D366;"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Title Banner -->
+    <section class="page-banner" style="background: linear-gradient(135deg, rgba(3, 7, 18, 0.88), rgba(3, 7, 18, 0.95)), url('assets/images/real_room_1.jpg'); background-size: cover; background-position: center; padding: 160px 0 80px; text-align: center;">
+        <div class="container">
+            <span class="section-tag center">Verified Pilgrims & Families</span>
+            <h1 style="font-size: 3.2rem; margin-top: 10px; font-family: var(--font-heading);">Guest Reviews & Ratings</h1>
+            <p style="color: #cbd5e1; font-size: 1.15rem; max-width: 680px; margin: 10px auto 0;">Real experiences shared by devotees, pilgrims, and families who enjoyed peaceful stays at Ali Hotel, Piran Kaliyar.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section style="padding: 20px 0 90px;">
+        <div class="container">
+            
+            <!-- Rating Summary Bar -->
+            <div class="reviews-stats-bar">
+                <div class="review-stat-item">
+                    <h3 id="avgRatingNumber">5.0</h3>
+                    <div style="color:#d4af37; font-size:1.1rem; margin-bottom:4px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p>Average Guest Rating</p>
+                </div>
+                <div class="review-stat-item">
+                    <h3 id="totalReviewsCount">3</h3>
+                    <p style="color:#f5d76e; font-weight:700;">Verified Reviews</p>
+                    <p>On Live Website</p>
+                </div>
+                <div class="review-stat-item">
+                    <h3 style="color:#10b981;">100%</h3>
+                    <p style="color:#10b981; font-weight:700;">Recommended</p>
+                    <p>For Family & Pilgrims</p>
+                </div>
+            </div>
+
+            <!-- Controls & Write Review Button -->
+            <div class="reviews-header-actions">
+                <div class="review-filter-btns">
+                    <button class="review-filter-btn active" data-filter="all" onclick="filterReviews('all', this)"><i class="fa-solid fa-list"></i> All Reviews (<span id="filterAllCount">0</span>)</button>
+                    <button class="review-filter-btn" data-filter="5" onclick="filterReviews('5', this)">⭐⭐⭐⭐⭐ 5 Stars</button>
+                    <button class="review-filter-btn" data-filter="4" onclick="filterReviews('4', this)">⭐⭐⭐⭐ 4 Stars</button>
+                </div>
+
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                    <button class="btn-write-review" onclick="openPublicReviewModal()">
+                        <i class="fa-solid fa-pen-to-square"></i> Submit Your Review
+                    </button>
+                    <a href="https://share.google/wbQLk41U9Xn9ircUh" target="_blank" class="btn btn-outline" style="border-radius:30px; font-size:0.95rem;">
+                        <i class="fa-brands fa-google" style="color:#4285F4;"></i> Google Profile
+                    </a>
+                </div>
+            </div>
+
+            <!-- Reviews Cards Grid -->
+            <div class="reviews-grid" id="publicReviewsContainer">
+                <!-- Dynamically populated from JS -->
+            </div>
+
+            <!-- Bottom CTA Section -->
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; padding: 45px 30px; text-align: center; margin-top: 30px;">
+                <h3 style="font-size: 2rem; font-family: var(--font-heading); color: #fff; margin-bottom: 10px;">Have you stayed at Ali Hotel recently?</h3>
+                <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 25px;">Your feedback helps us continuously deliver peaceful, clean, and welcoming hospitality to all devotees visiting Sabir Pak.</p>
+                <button class="btn-write-review" onclick="openPublicReviewModal()" style="font-size:1.05rem; padding:14px 32px;">
+                    <i class="fa-solid fa-star"></i> Write a Quick Review Now
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interactive Write Review Modal -->
+    <div class="review-modal-overlay" id="publicReviewModal">
+        <div class="review-modal-card">
+            <div class="modal-head">
+                <h3><i class="fa-solid fa-pen-nib"></i> Submit Your Review</h3>
+                <button type="button" class="close-modal-btn" onclick="closePublicReviewModal()">&times;</button>
+            </div>
+
+            <form id="publicReviewForm" onsubmit="handlePublicReviewSubmit(event)">
+                <div class="form-row">
+                    <label><i class="fa-solid fa-star" style="color:#d4af37;"></i> Overall Star Rating *</label>
+                    <div class="star-picker-wrap" id="starPicker">
+                        <i class="fa-solid fa-star active" data-val="1"></i>
+                        <i class="fa-solid fa-star active" data-val="2"></i>
+                        <i class="fa-solid fa-star active" data-val="3"></i>
+                        <i class="fa-solid fa-star active" data-val="4"></i>
+                        <i class="fa-solid fa-star active" data-val="5"></i>
+                    </div>
+                    <input type="hidden" id="selectedStarValue" value="5">
+                </div>
+
+                <div class="form-row">
+                    <label for="reviewAuthorInput"><i class="fa-solid fa-user" style="color:#d4af37;"></i> Your Full Name *</label>
+                    <input type="text" id="reviewAuthorInput" placeholder="e.g. Mohd Salman / Irfan Khan" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="reviewCityInput"><i class="fa-solid fa-location-dot" style="color:#d4af37;"></i> City / State *</label>
+                    <input type="text" id="reviewCityInput" placeholder="e.g. Delhi NCR / Lucknow / Mumbai" required>
+                </div>
+
+                <div class="form-row">
+                    <label for="reviewRoomTypeInput"><i class="fa-solid fa-bed" style="color:#d4af37;"></i> Room Stayed / Purpose of Visit</label>
+                    <select id="reviewRoomTypeInput">
+                        <option value="Deluxe Triple Bed AC Room">Deluxe Triple Bed AC Room</option>
+                        <option value="Super Deluxe 5-Bed Family Suite">Super Deluxe 5-Bed Family Suite</option>
+                        <option value="Deluxe Double Bed AC Room">Deluxe Double Bed AC Room</option>
+                        <option value="12-Bed Large Group AC Hall">12-Bed Large Group AC Hall</option>
+                        <option value="Family Pilgrimage / Urs Ziyarat" selected>Family Pilgrimage / Urs Ziyarat</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="reviewMessageInput"><i class="fa-solid fa-comment-dots" style="color:#d4af37;"></i> Your Stay Review & Feedback *</label>
+                    <textarea id="reviewMessageInput" rows="4" placeholder="Tell other pilgrims about room cleanliness, AC cooling, lift access, owner service, and proximity to Dargah Sabir Pak..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit-review">
+                    <i class="fa-solid fa-paper-plane"></i> Publish My Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Toast Notification -->
+    <div class="review-toast" id="publicToast">
+        <i class="fa-solid fa-circle-check" style="font-size:1.3rem;"></i>
+        <span id="toastMsg">Thank you! Your review has been published.</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo-wrap">
+                        <img src="assets/images/logo.jpg" alt="Ali Hotel Official Logo">
+                        <h3 class="footer-logo">Ali Hotel</h3>
+                    </div>
+                    <p>A Family Stay Hotel in Piran Kaliyar, Roorkee. 18 Fully Air-Conditioned Rooms with 24/7 service, modern lift, and family comfort.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="rooms.html">Rooms & Suites</a></li>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="amenities.html">Amenities</a></li>
+                        <li><a href="reviews.html">Guest Reviews</a></li>
+                        <li><a href="contact.html">Contact & Location</a></li>
+                        <li><a href="admin.html" style="color: #d4af37;"><i class="fa-solid fa-lock"></i> Admin Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <p><i class="fa-solid fa-location-dot" style="color: #d4af37;"></i> Near VIP Chowk, Sohalpur Road<br>Piran Kaliyar Shareef, Roorkee - 247667 (UK)</p>
+                    <p><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 8077474290 (Haji Abdul Samad)<br><i class="fa-solid fa-phone" style="color: #d4af37;"></i> +91 7017934425 (Mohd Shadab)</p>
+                    <p><i class="fa-solid fa-envelope" style="color: #d4af37;"></i> alihotelpirankaliyar@gmail.com</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Direct WhatsApp</h4>
+                    <div class="social-links">
+                        <a href="https://wa.me/918077474290" target="_blank"><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> Chat on WhatsApp</a>
+                        <a href="tel:+918077474290"><i class="fa-solid fa-phone" style="color:#d4af37;"></i> Call Now</a>
+                        <a href="https://share.google/wbQLk41U9Xn9ircUh" target="_blank"><i class="fa-brands fa-google" style="color:#4285F4;"></i> Google Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Ali Hotel (Piran Kaliyar, Roorkee). All rights reserved. | <a href="admin.html" style="color: #888; text-decoration: none;">Admin Access</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Quick Chat Button -->
+    <a href="https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20room%20booking." target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="floating-whatsapp-tooltip">Chat with us on WhatsApp</span>
+    </a>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        const STORAGE_KEY = "ali_hotel_cms_db";
+
+        const DEFAULT_REVIEWS = [
+            {
+                id: "rev_1",
+                author: "Mohammad Irfan",
+                city: "Delhi NCR",
+                roomType: "Deluxe Triple Bed AC Room",
+                rating: 5,
+                date: "2026-08-20",
+                text: "Bohot hi accha aur saaf suthra hotel hai. Ali Hotel management aur unke staff ka behavior bohot humble aur helpful tha. Kaliyar Dargah ke bohot paas hai."
+            },
+            {
+                id: "rev_2",
+                author: "Rashid Khan & Family",
+                city: "Lucknow, UP",
+                roomType: "Super Deluxe 5-Bed Family Suite",
+                rating: 5,
+                date: "2026-08-22",
+                text: "Hum family ke sath aaye the aur AC family hall liya. AC cooling, bathroom cleanliness, modern elevator aur safe car parking bohot badiya thi. Highly recommended in Piran Kaliyar!"
+            },
+            {
+                id: "rev_3",
+                author: "Haji Abdul Ghaffar",
+                city: "Mumbai, MH",
+                roomType: "Family Pilgrimage Stay",
+                rating: 5,
+                date: "2026-08-24",
+                text: "Peaceful stay near VIP Chowk, clean bedsheets, 24/7 hot water geyser available. Direct owner booking with Haji Abdul Samad and Mohd Shadab made it very affordable and trustworthy."
+            }
+        ];
+
+        function getStoredData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && Array.isArray(parsed.reviews)) {
+                        return parsed;
+                    }
+                }
+            } catch (e) {
+                console.error("Storage parse error", e);
+            }
+            return { reviews: DEFAULT_REVIEWS };
+        }
+
+        let activeFilter = 'all';
+
+        function renderPublicReviews() {
+            const data = getStoredData();
+            const reviews = data.reviews || DEFAULT_REVIEWS;
+            const container = document.getElementById('publicReviewsContainer');
+            if (!container) return;
+
+            // Filter logic
+            const filtered = reviews.filter(r => {
+                if (activeFilter === 'all') return true;
+                return String(r.rating) === String(activeFilter);
+            });
+
+            // Update stats
+            document.getElementById('totalReviewsCount').textContent = reviews.length;
+            document.getElementById('filterAllCount').textContent = reviews.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; background: #111827; border-radius: 16px; border: 1px dashed rgba(212,175,55,0.3);">
+                        <i class="fa-solid fa-star" style="font-size: 2.5rem; color: #4b5563; margin-bottom: 12px;"></i>
+                        <h4 style="color:#fff; font-size:1.2rem;">No reviews found for this rating yet.</h4>
+                        <p style="color:#94a3b8; margin-top:6px;">Be the first one to share your experience!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(r => {
+                const starsHtml = Array.from({ length: 5 }, (_, i) => 
+                    `<i class="fa-solid fa-star" style="color: ${i < (r.rating || 5) ? '#f5d76e' : '#4b5563'};"></i>`
+                ).join('');
+
+                const initial = (r.author || 'G').charAt(0).toUpperCase();
+                const roomTag = r.roomType || 'Verified Stay';
+                const dateStr = r.date || 'Recent Stay';
+
+                return `
+                    <div class="public-review-card">
+                        <div>
+                            <div class="review-card-top">
+                                <div class="review-author-info">
+                                    <div class="review-avatar-icon">${initial}</div>
+                                    <div>
+                                        <div class="review-author-name">${r.author}</div>
+                                        <div class="review-city-badge"><i class="fa-solid fa-location-dot" style="color:#d4af37;"></i> ${r.city || 'Visitor'}</div>
+                                    </div>
+                                </div>
+                                <div class="review-rating-stars">${starsHtml}</div>
+                            </div>
+                            <div class="review-text-content">"${r.text}"</div>
+                        </div>
+                        <div class="review-card-footer">
+                            <span class="review-tag-badge"><i class="fa-solid fa-circle-check" style="color:#10b981; margin-right:4px;"></i> ${roomTag}</span>
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;"></i> ${dateStr}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterReviews(rating, btn) {
+            activeFilter = rating;
+            document.querySelectorAll('.review-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderPublicReviews();
+        }
+
+        // Modal Logic
+        function openPublicReviewModal() {
+            document.getElementById('publicReviewModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePublicReviewModal() {
+            document.getElementById('publicReviewModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Star Picker
+        const starIcons = document.querySelectorAll('#starPicker i');
+        const starHidden = document.getElementById('selectedStarValue');
+
+        starIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const val = parseInt(icon.getAttribute('data-val'), 10);
+                starHidden.value = val;
+                updateStarDisplay(val);
+            });
+
+            icon.addEventListener('mouseenter', () => {
+                const val = parseInt(icon.getAttribute('data-val'), 10);
+                starIcons.forEach((s, idx) => {
+                    if (idx < val) s.classList.add('hovered');
+                    else s.classList.remove('hovered');
+                });
+            });
+        });
+
+        document.getElementById('starPicker').addEventListener('mouseleave', () => {
+            const currentVal = parseInt(starHidden.value, 10);
+            updateStarDisplay(currentVal);
+        });
+
+        function updateStarDisplay(val) {
+            starIcons.forEach((s, idx) => {
+                s.classList.remove('hovered');
+                if (idx < val) s.classList.add('active');
+                else s.classList.remove('active');
+            });
+        }
+
+        function showPublicToast(msg) {
+            const toast = document.getElementById('publicToast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function handlePublicReviewSubmit(e) {
+            e.preventDefault();
+            const author = document.getElementById('reviewAuthorInput').value.trim();
+            const city = document.getElementById('reviewCityInput').value.trim();
+            const roomType = document.getElementById('reviewRoomTypeInput').value;
+            const text = document.getElementById('reviewMessageInput').value.trim();
+            const rating = parseInt(starHidden.value, 10) || 5;
+
+            if (!author || !text) {
+                alert("Please fill in your name and review message.");
+                return;
+            }
+
+            let fullData = {};
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) fullData = JSON.parse(raw);
+            } catch (err) {}
+
+            if (!fullData.reviews) {
+                fullData.reviews = [...DEFAULT_REVIEWS];
+            }
+
+            const newReview = {
+                id: "rev_" + Date.now(),
+                author,
+                city,
+                roomType,
+                rating,
+                date: new Date().toISOString().slice(0, 10),
+                text
+            };
+
+            // Add at beginning so it appears immediately at the top
+            fullData.reviews.unshift(newReview);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(fullData));
+
+            // Reset form
+            document.getElementById('publicReviewForm').reset();
+            updateStarDisplay(5);
+            starHidden.value = 5;
+
+            closePublicReviewModal();
+            renderPublicReviews();
+            showPublicToast("🎉 Thank you! Your review has been successfully published.");
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPublicReviews();
+        });
+    </script>
+</body>
+</html>

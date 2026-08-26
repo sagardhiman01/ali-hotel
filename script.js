@@ -353,8 +353,43 @@ function initDargahCarousel() {
         }, { passive: true });
     }
 
-    startAutoSlide();
+// ========================================
+// DYNAMIC HOME PAGE REVIEWS LOADER
+// ========================================
+function loadDynamicHomeReviews() {
+    const grid = document.getElementById('homeTestimonialsGrid');
+    if (!grid) return;
+
+    try {
+        const raw = localStorage.getItem('ali_hotel_cms_db');
+        if (raw) {
+            const data = JSON.parse(raw);
+            if (data && Array.isArray(data.reviews) && data.reviews.length > 0) {
+                grid.innerHTML = data.reviews.slice(0, 3).map(rev => {
+                    const stars = Array.from({ length: 5 }, (_, i) => 
+                        `<i class="fa-solid fa-star" style="color: ${i < (rev.rating || 5) ? '#f5d76e' : '#4b5563'};"></i>`
+                    ).join('');
+
+                    return `
+                        <div class="testimonial-card">
+                            <div class="stars">${stars}</div>
+                            <p>"${rev.text}"</p>
+                            <div class="testimonial-author">
+                                <strong>${rev.author}</strong>
+                                <span><i class="fa-brands fa-google" style="color:#4285F4;"></i> ${rev.city || 'Google Verified Guest'}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+    } catch (err) {
+        console.error('Error loading home reviews:', err);
+    }
 }
 
-document.addEventListener('DOMContentLoaded', initDargahCarousel);
-initDargahCarousel();
+document.addEventListener('DOMContentLoaded', () => {
+    initDargahCarousel();
+    loadDynamicHomeReviews();
+});
+

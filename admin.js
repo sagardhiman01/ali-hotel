@@ -730,31 +730,52 @@ function loadReviewsList() {
     if (!list) return;
     list.innerHTML = "";
 
+    if (!hotelData.reviews || hotelData.reviews.length === 0) {
+        list.innerHTML = `
+            <div style="text-align:center; padding:40px 20px; background:#111827; border:1px dashed rgba(255,255,255,0.1); border-radius:12px;">
+                <i class="fa-solid fa-comments" style="font-size:2.5rem; color:#4b5563; margin-bottom:10px;"></i>
+                <h4 style="color:#fff;">No reviews in the database.</h4>
+                <p style="color:#94a3b8; font-size:0.9rem;">Click '+ Add New Review' above to add one, or wait for guests to submit reviews on the website.</p>
+            </div>
+        `;
+        return;
+    }
+
     hotelData.reviews.forEach((rev, index) => {
+        const ratingNum = rev.rating || 5;
+        const stars = "★".repeat(ratingNum) + "☆".repeat(5 - ratingNum);
+        const roomTypeStr = rev.roomType ? `<span style="background:rgba(212,175,55,0.12); color:#f5d76e; padding:2px 8px; border-radius:10px; font-size:0.75rem; margin-left:8px;">${rev.roomType}</span>` : '';
+        const dateStr = rev.date ? `<span style="color:#64748b; font-size:0.8rem; margin-left:8px;"><i class="fa-regular fa-calendar"></i> ${rev.date}</span>` : '';
+
         const div = document.createElement("div");
-        div.style.cssText = "background:#111827; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:20px; margin-bottom:15px;";
+        div.style.cssText = "background:#111827; border:1px solid rgba(212,175,55,0.25); border-radius:12px; padding:20px; margin-bottom:15px; box-shadow:0 4px 15px rgba(0,0,0,0.4);";
         div.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; flex-wrap:wrap; gap:10px;">
                 <div>
-                    <strong style="color:#fff; font-size:1.05rem;">${rev.author}</strong> <span style="color:#94a3b8; font-size:0.85rem;">(${rev.city})</span>
-                    <div style="color:#d4af37; font-size:0.9rem; margin-top:2px;">★★★★★ (5.0 Google Review)</div>
+                    <strong style="color:#fff; font-size:1.1rem;">${rev.author}</strong> 
+                    <span style="color:#94a3b8; font-size:0.85rem;">(${rev.city || 'Guest'})</span>
+                    ${roomTypeStr}
+                    ${dateStr}
+                    <div style="color:#f5d76e; font-size:1rem; margin-top:4px; letter-spacing:2px;">${stars} <span style="font-size:0.85rem; color:#cbd5e1;">(${ratingNum}.0 Rating)</span></div>
                 </div>
-                <button class="btn-action delete" onclick="deleteReview(${index})">
-                    <i class="fa-solid fa-trash"></i> Delete
+                <button class="btn-action delete" style="padding:8px 14px; font-weight:600;" onclick="deleteReview(${index})">
+                    <i class="fa-solid fa-trash"></i> Delete Review
                 </button>
             </div>
-            <p style="color:#cbd5e1; font-style:italic; font-size:0.9rem; line-height:1.5;">"${rev.text}"</p>
+            <p style="color:#cbd5e1; font-style:italic; font-size:0.92rem; line-height:1.6; background:rgba(0,0,0,0.2); padding:12px 16px; border-radius:8px; border-left:3px solid #d4af37;">"${rev.text}"</p>
         `;
         list.appendChild(div);
     });
 }
 
 function deleteReview(index) {
-    if (confirm("Delete this review?")) {
+    const rev = hotelData.reviews[index];
+    if (confirm(`Are you sure you want to permanently delete the review by '${rev ? rev.author : 'Guest'}'?`)) {
         hotelData.reviews.splice(index, 1);
         saveHotelData(hotelData);
         loadReviewsList();
         loadDashboardStats();
+        showToast("Review successfully removed from website!");
     }
 }
 
