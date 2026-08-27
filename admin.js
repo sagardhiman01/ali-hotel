@@ -69,6 +69,11 @@ const DEFAULT_HOTEL_DATA = {
         }
     ],
     gallery: [
+        { id: "g_blue_triple", title: "Deluxe Triple AC Room", category: "rooms", src: "assets/images/real_deluxe_triple_blue.jpg", desc: "Double bed + single bed with designer fluted media wall and split AC" },
+        { id: "g_console_wardrobe", title: "Luxury AC Bedroom & Wardrobe", category: "rooms", src: "assets/images/real_room_console_wardrobe.jpg", desc: "Spacious layout with full wooden wardrobe, dressing mirror & LED lighting" },
+        { id: "g_ceiling_art", title: "Geometric LED False Ceiling", category: "interior", src: "assets/images/real_ceiling_lights_art.jpg", desc: "Modern geometric ceiling architecture with warm ambient LED glow" },
+        { id: "g_cove_modern", title: "Ambient Modern Ceiling & Split AC", category: "interior", src: "assets/images/real_modern_cove_ceiling.jpg", desc: "Curved cove false ceiling with warm golden strip illumination" },
+        { id: "g_marble_stairs", title: "Grand Granite & Marble Staircase", category: "interior", src: "assets/images/real_marble_stairs_granite.jpg", desc: "Polished dual-tone marble steps with safety railing and luxury tiles" },
         { id: "g1", title: "Deluxe Triple Bed AC Room", category: "rooms", src: "assets/images/real_triple_room.jpg", desc: "Double bed + single bed with warm cove lighting" },
         { id: "g2", title: "5-Bed Grand Family Suite", category: "rooms", src: "assets/images/real_family_suite_5bed.jpg", desc: "Plush cushioned headboards & spacious marble layout" },
         { id: "g3", title: "Grand Marble Staircase", category: "interior", src: "assets/images/real_stairs_view.jpg", desc: "Wooden panelling, gold trim & wide marble steps" },
@@ -120,8 +125,8 @@ const DEFAULT_HOTEL_DATA = {
         },
         {
             id: "rev_3",
-            author: "Haji Abdul Ghaffar",
-            city: "Mumbai",
+            author: "Salman Qureshi",
+            city: "Meerut",
             rating: 5,
             text: "Sabse accha hotel hai VIP Chowk ke paas. Room service, AC, lift aur cleanliness 5-star level ki hai. Highly recommended for all pilgrims."
         }
@@ -136,7 +141,22 @@ function getHotelData() {
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
-            return JSON.parse(stored);
+            const data = JSON.parse(stored);
+            if (data && Array.isArray(data.gallery)) {
+                // Ensure new default photos exist in gallery if not explicitly deleted
+                const existingSrcs = new Set(data.gallery.map(g => g.src));
+                let added = false;
+                DEFAULT_HOTEL_DATA.gallery.forEach(defItem => {
+                    if (!existingSrcs.has(defItem.src) && !data.deletedPhotos?.includes(defItem.src)) {
+                        data.gallery.unshift(defItem);
+                        added = true;
+                    }
+                });
+                if (added) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                }
+                return data;
+            }
         }
     } catch (e) {
         console.error("Failed to parse stored CMS data", e);
@@ -571,11 +591,17 @@ function loadGalleryGrid() {
 }
 
 function deleteGalleryPhoto(index) {
-    if (confirm(`Remove photo '${hotelData.gallery[index].title}' from gallery?`)) {
+    const item = hotelData.gallery[index];
+    if (confirm(`Remove photo '${item ? item.title : 'Photo'}' from website gallery?`)) {
+        if (!hotelData.deletedPhotos) hotelData.deletedPhotos = [];
+        if (item && item.src) {
+            hotelData.deletedPhotos.push(item.src);
+        }
         hotelData.gallery.splice(index, 1);
         saveHotelData(hotelData);
         loadGalleryGrid();
         loadDashboardStats();
+        showToast("Photo removed from website gallery!");
     }
 }
 

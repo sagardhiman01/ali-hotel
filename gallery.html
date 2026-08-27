@@ -329,163 +329,30 @@
     </section>
 
     <!-- Gallery Section -->
-    <section style="padding: 50px 0 90px;">
+<section style="padding: 50px 0 90px;">
         <div class="container">
             
             <!-- Category Filter Buttons -->
             <div class="gallery-filter-wrap">
-                <button class="gallery-filter-btn active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All Photos (<span id="count-all">12</span>)</button>
+                <button class="gallery-filter-btn active" data-filter="all"><i class="fa-solid fa-layer-group"></i> All Photos (<span id="count-all">0</span>)</button>
                 <button class="gallery-filter-btn" data-filter="rooms"><i class="fa-solid fa-bed"></i> AC Rooms & Suites</button>
                 <button class="gallery-filter-btn" data-filter="corridor"><i class="fa-solid fa-elevator"></i> Corridors & Lift</button>
                 <button class="gallery-filter-btn" data-filter="interior"><i class="fa-solid fa-stairs"></i> Stairs & Architecture</button>
                 <button class="gallery-filter-btn" data-filter="amenities"><i class="fa-solid fa-shower"></i> Facilities & Bathrooms</button>
             </div>
 
-            <!-- Photos Grid -->
+            <!-- Dynamic Photos Grid -->
             <div class="gallery-grid" id="galleryGrid">
-                
-                <!-- 1. Real Triple Room -->
-                <div class="gallery-item" data-category="rooms" data-title="Deluxe Triple Bed AC Room" data-desc="Spacious bedroom with double bed + single bed, marble wall cladding, and warm designer false ceiling cove lights." data-src="assets/images/real_triple_room.jpg">
-                    <img src="assets/images/real_triple_room.jpg" alt="Deluxe Triple Bed AC Room">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Deluxe Room</span>
-                        <h4 class="gallery-title">Deluxe Triple Bed AC Room</h4>
-                        <p class="gallery-desc">Double bed + single bed with warm cove lighting</p>
-                    </div>
-                </div>
-
-                <!-- 2. Grand Family 5-Bed Suite -->
-                <div class="gallery-item" data-category="rooms" data-title="Super Deluxe 5-Bed Family Suite" data-desc="Expansive family hall with plush olive green headboards, fresh linens, multiple beds, and silent split AC cooling." data-src="assets/images/real_family_suite_5bed.jpg">
-                    <img src="assets/images/real_family_suite_5bed.jpg" alt="Super Deluxe 5-Bed Family Suite">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Family Suite</span>
-                        <h4 class="gallery-title">5-Bed Grand Family Suite</h4>
-                        <p class="gallery-desc">Plush cushioned headboards & spacious marble layout</p>
-                    </div>
-                </div>
-
-                <!-- 3. Real Staircase -->
-                <div class="gallery-item tall" data-category="interior" data-title="Grand Marble Staircase" data-desc="Elegantly designed marble staircase with polished wood wall cladding, gold trims, and recessed step illumination." data-src="assets/images/real_stairs_view.jpg">
-                    <img src="assets/images/real_stairs_view.jpg" alt="Grand Marble Staircase">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Interior Design</span>
-                        <h4 class="gallery-title">Grand Marble Staircase</h4>
-                        <p class="gallery-desc">Wooden panelling, gold trim & wide marble steps</p>
-                    </div>
-                </div>
-
-                <!-- 4. Real Room TV Panel -->
-                <div class="gallery-item" data-category="rooms" data-title="Deluxe Room with Modern TV Wall" data-desc="Fluted wooden TV wall panel, silent split air-conditioner, king bed, and daily room maintenance." data-src="assets/images/real_room_tv_panel.jpg">
-                    <img src="assets/images/real_room_tv_panel.jpg" alt="Deluxe Room with Modern TV Wall">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">AC Room</span>
-                        <h4 class="gallery-title">Modern TV Console & AC</h4>
-                        <p class="gallery-desc">Wood-fluted media panel with split air conditioner</p>
-                    </div>
-                </div>
-
-                <!-- 5. Designer Cove Ceiling -->
-                <div class="gallery-item" data-category="interior" data-title="Designer False Ceiling & Split AC" data-desc="Modern dual-layer curved false ceiling with warm ambient LED cove lights and powerful split cooling." data-src="assets/images/real_cove_ceiling.jpg">
-                    <img src="assets/images/real_cove_ceiling.jpg" alt="Designer False Ceiling & Split AC">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Architecture</span>
-                        <h4 class="gallery-title">Ambient False Ceiling</h4>
-                        <p class="gallery-desc">Warm LED cove illumination & split AC system</p>
-                    </div>
-                </div>
-
-                <!-- 6. Real Room 1 -->
-                <div class="gallery-item" data-category="rooms" data-title="Luxury AC Room with Wall Panel" data-desc="Modern wall finish, comfortable double bed, flat screen TV setup, and sparkling clean ambiance." data-src="assets/images/real_room_1.jpg">
-                    <img src="assets/images/real_room_1.jpg" alt="Luxury AC Room with Wall Panel">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">AC Room</span>
-                        <h4 class="gallery-title">Luxury AC Bedroom</h4>
-                        <p class="gallery-desc">King-size comfort with wooden panel styling & TV console</p>
-                    </div>
-                </div>
-
-                <!-- 7. Real Corridor & Lift -->
-                <div class="gallery-item tall" data-category="corridor" data-title="Hotel Corridor & Modern Elevator" data-desc="Well-lit spacious corridors with imported marble tiles, wooden room doors, and elevator access on every floor." data-src="assets/images/real_corridor_lift.jpg">
-                    <img src="assets/images/real_corridor_lift.jpg" alt="Hotel Corridor with Lift Access">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Corridor & Lift</span>
-                        <h4 class="gallery-title">Modern Elevator & Hallway</h4>
-                        <p class="gallery-desc">Easy lift access for senior citizens and families</p>
-                    </div>
-                </div>
-
-                <!-- 8. Real Double Room -->
-                <div class="gallery-item" data-category="rooms" data-title="Deluxe Double Bed AC Room" data-desc="Plush velvet headboard, intercom phone, pristine marble walls, and peaceful atmosphere." data-src="assets/images/real_double_room.jpg">
-                    <img src="assets/images/real_double_room.jpg" alt="Deluxe Double Bed AC Room">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Deluxe Room</span>
-                        <h4 class="gallery-title">Deluxe AC Bedroom</h4>
-                        <p class="gallery-desc">Plush velvet bed headboard & 24/7 intercom</p>
-                    </div>
-                </div>
-
-                <!-- 9. Real Corridor Perspective -->
-                <div class="gallery-item" data-category="corridor" data-title="Guest Corridor & Room Entrances" data-desc="Immaculately maintained marble floor hallways with modern warm ceiling cove lighting." data-src="assets/images/real_corridor_view.jpg">
-                    <img src="assets/images/real_corridor_view.jpg" alt="Guest Corridor and Room Entrances">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Corridor</span>
-                        <h4 class="gallery-title">Guest Room Corridor</h4>
-                        <p class="gallery-desc">Bright, safe, and hygienic guest floor passage</p>
-                    </div>
-                </div>
-
-                <!-- 10. Real Family Room -->
-                <div class="gallery-item" data-category="rooms" data-title="Spacious Family AC Suite" data-desc="Multiple beds for entire family, premium false ceiling with cove lighting, and large airy windows." data-src="assets/images/real_family_room.jpg">
-                    <img src="assets/images/real_family_room.jpg" alt="Spacious Family AC Suite">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Family Suite</span>
-                        <h4 class="gallery-title">Family AC Bedroom</h4>
-                        <p class="gallery-desc">Double bed + single bed with cove LED lighting</p>
-                    </div>
-                </div>
-
-                <!-- 11. 12-Bed Large Family Suite -->
-                <div class="gallery-item" data-category="rooms" data-title="12-Bed Large Group AC Hall" data-desc="Ideal for large pilgrim groups, families, and tour parties visiting Piran Kaliyar together." data-src="assets/images/family_suite_12bed.jpg">
-                    <img src="assets/images/family_suite_12bed.jpg" alt="12-Bed Family Group Suite">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Group Suite</span>
-                        <h4 class="gallery-title">12-Bed Large AC Suite</h4>
-                        <p class="gallery-desc">Grand group accommodation with dedicated AC</p>
-                    </div>
-                </div>
-
-                <!-- 12. Attached Clean Western Bathroom -->
-                <div class="gallery-item" data-category="amenities" data-title="Attached Clean Western Bathroom" data-desc="Modern Western commode, hot & cold geyser water, fresh towels, and hygienic sanitary fittings." data-src="assets/images/bathroom.jpg">
-                    <img src="assets/images/bathroom.jpg" alt="Attached Clean Bathroom">
-                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Amenities</span>
-                        <h4 class="gallery-title">Attached Western Bathroom</h4>
-                        <p class="gallery-desc">24/7 Hot water geyser & clean sanitary fittings</p>
-                    </div>
-                </div>
-
+                <!-- Dynamically populated from CMS database / LocalStorage -->
             </div>
 
             <!-- Bottom CTA -->
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.3); border-radius: 18px; padding: 40px 30px; text-align: center;">
-                <h3 style="font-size: 1.8rem; font-family: var(--font-heading); color: #fff; margin-bottom: 10px;">Want to book any of these rooms?</h3>
-                <p style="color: #aaa; margin-bottom: 25px;">Contact the owners directly on WhatsApp or Call for the best rates and instant confirmation.</p>
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(212,175,55,0.25); border-radius: 18px; padding: 45px 30px; text-align: center; margin-top: 50px;">
+                <h3 style="font-size: 2rem; font-family: var(--font-heading); color: #fff; margin-bottom: 12px;">Liked what you see? Book directly with owners</h3>
+                <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 25px;">Get instant confirmation, best room prices, and 24-hour check-in by chatting with us on WhatsApp or calling directly.</p>
+                <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
                     <a href="https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20saw%20your%20photo%20gallery%20and%20want%20to%20book%20a%20room." target="_blank" class="btn btn-primary" style="background:#25D366; border-color:#25D366;"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
                     <a href="tel:+918077474290" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call: 8077474290</a>
-                    <a href="tel:+917017934425" class="btn btn-outline"><i class="fa-solid fa-phone"></i> Call: 7017934425</a>
                 </div>
             </div>
 
@@ -494,9 +361,9 @@
 
     <!-- Fullscreen Lightbox Modal -->
     <div class="lightbox-modal" id="lightboxModal">
-        <button class="lightbox-close" id="lightboxClose" aria-label="Close Lightbox"><i class="fa-solid fa-xmark"></i></button>
-        <button class="lightbox-btn prev" id="lightboxPrev" aria-label="Previous Image"><i class="fa-solid fa-chevron-left"></i></button>
-        <button class="lightbox-btn next" id="lightboxNext" aria-label="Next Image"><i class="fa-solid fa-chevron-right"></i></button>
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close Lightbox">&times;</button>
+        <button class="lightbox-btn prev" id="lightboxPrev" aria-label="Previous Photo"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="lightbox-btn next" id="lightboxNext" aria-label="Next Photo"><i class="fa-solid fa-chevron-right"></i></button>
 
         <div class="lightbox-content">
             <div class="lightbox-img-wrap">
@@ -513,7 +380,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -558,7 +424,6 @@
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Quick Chat Button -->
     <a href="https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20room%20booking." target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
         <span class="floating-whatsapp-tooltip">Chat with us on WhatsApp</span>
@@ -566,87 +431,162 @@
 
     <script src="script.js"></script>
     <script>
-        // Gallery Filter & Lightbox Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const filterBtns = document.querySelectorAll('.gallery-filter-btn');
-            const galleryItems = document.querySelectorAll('.gallery-item');
-            const modal = document.getElementById('lightboxModal');
-            const modalImg = document.getElementById('lightboxImg');
-            const modalTitle = document.getElementById('lightboxTitle');
-            const modalDesc = document.getElementById('lightboxDesc');
-            const modalWhatsApp = document.getElementById('lightboxWhatsApp');
-            const closeBtn = document.getElementById('lightboxClose');
-            const prevBtn = document.getElementById('lightboxPrev');
-            const nextBtn = document.getElementById('lightboxNext');
+        const STORAGE_KEY = "ali_hotel_cms_db";
 
-            let currentVisibleItems = Array.from(galleryItems);
-            let currentIndex = 0;
+        const DEFAULT_GALLERY = [
+            { id: "g_blue_triple", title: "Deluxe Triple AC Room", category: "rooms", src: "assets/images/real_deluxe_triple_blue.jpg", desc: "Double bed + single bed with designer fluted media wall and split AC" },
+            { id: "g_console_wardrobe", title: "Luxury AC Bedroom & Wardrobe", category: "rooms", src: "assets/images/real_room_console_wardrobe.jpg", desc: "Spacious layout with full wooden wardrobe, dressing mirror & LED lighting" },
+            { id: "g_ceiling_art", title: "Geometric LED False Ceiling", category: "interior", src: "assets/images/real_ceiling_lights_art.jpg", desc: "Modern geometric ceiling architecture with warm ambient LED glow" },
+            { id: "g_cove_modern", title: "Ambient Modern Ceiling & Split AC", category: "interior", src: "assets/images/real_modern_cove_ceiling.jpg", desc: "Curved cove false ceiling with warm golden strip illumination" },
+            { id: "g_marble_stairs", title: "Grand Granite & Marble Staircase", category: "interior", src: "assets/images/real_marble_stairs_granite.jpg", desc: "Polished dual-tone marble steps with safety railing and luxury tiles" },
+            { id: "g1", title: "Deluxe Triple Bed AC Room", category: "rooms", src: "assets/images/real_triple_room.jpg", desc: "Double bed + single bed with warm cove lighting" },
+            { id: "g2", title: "5-Bed Grand Family Suite", category: "rooms", src: "assets/images/real_family_suite_5bed.jpg", desc: "Plush cushioned headboards & spacious marble layout" },
+            { id: "g3", title: "Grand Marble Staircase", category: "interior", src: "assets/images/real_stairs_view.jpg", desc: "Wooden panelling, gold trim & wide marble steps" },
+            { id: "g4", title: "Modern TV Console & AC", category: "rooms", src: "assets/images/real_room_tv_panel.jpg", desc: "Wood-fluted media panel with split air conditioner" },
+            { id: "g5", title: "Ambient False Ceiling", category: "interior", src: "assets/images/real_cove_ceiling.jpg", desc: "Warm LED cove illumination & split AC system" },
+            { id: "g6", title: "Luxury AC Bedroom", category: "rooms", src: "assets/images/real_room_1.jpg", desc: "King comfort with TV console panel" },
+            { id: "g7", title: "Modern Elevator & Hallway", category: "corridor", src: "assets/images/real_corridor_lift.jpg", desc: "Smooth elevator on every floor" },
+            { id: "g8", title: "Deluxe AC Bedroom", category: "rooms", src: "assets/images/real_double_room.jpg", desc: "Plush velvet bed headboard" },
+            { id: "g9", title: "Guest Room Corridor", category: "corridor", src: "assets/images/real_corridor_view.jpg", desc: "Bright marble floor passage" },
+            { id: "g10", title: "12-Bed Large Group Suite", category: "rooms", src: "assets/images/family_suite_12bed.jpg", desc: "Group pilgrim accommodation" },
+            { id: "g11", title: "Attached Western Bathroom", category: "amenities", src: "assets/images/bathroom.jpg", desc: "Clean geyser water & Western commode" }
+        ];
 
-            // Filter logic
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const filter = btn.getAttribute('data-filter');
-
-                    currentVisibleItems = [];
-                    galleryItems.forEach(item => {
-                        const category = item.getAttribute('data-category');
-                        if (filter === 'all' || category === filter) {
-                            item.style.display = 'block';
-                            currentVisibleItems.push(item);
-                        } else {
-                            item.style.display = 'none';
+        function getActiveGalleryPhotos() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const data = JSON.parse(raw);
+                    if (data && Array.isArray(data.gallery)) {
+                        const existingSrcs = new Set(data.gallery.map(g => g.src));
+                        let added = false;
+                        DEFAULT_GALLERY.forEach(defItem => {
+                            if (!existingSrcs.has(defItem.src) && !data.deletedPhotos?.includes(defItem.src)) {
+                                data.gallery.unshift(defItem);
+                                added = true;
+                            }
+                        });
+                        if (added) {
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                         }
-                    });
-                });
+                        return data.gallery;
+                    }
+                }
+            } catch (err) {
+                console.error("Storage load error", err);
+            }
+            return DEFAULT_GALLERY;
+        }
+
+        let currentPhotosList = [];
+        let filteredPhotosList = [];
+        let currentLightboxIndex = 0;
+
+        function renderLiveGallery(filter = 'all') {
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (!galleryGrid) return;
+
+            currentPhotosList = getActiveGalleryPhotos();
+            document.getElementById('count-all').textContent = currentPhotosList.length;
+
+            filteredPhotosList = currentPhotosList.filter(item => {
+                if (filter === 'all') return true;
+                return item.category === filter;
             });
 
-            // Open Lightbox
-            function openLightbox(index) {
-                if (currentVisibleItems.length === 0) return;
-                currentIndex = (index + currentVisibleItems.length) % currentVisibleItems.length;
-                const item = currentVisibleItems[currentIndex];
-                const src = item.getAttribute('data-src');
-                const title = item.getAttribute('data-title');
-                const desc = item.getAttribute('data-desc');
-
-                modalImg.src = src;
-                modalImg.alt = title;
-                modalTitle.textContent = title;
-                modalDesc.textContent = desc;
-                modalWhatsApp.href = `https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20booking%20this%20room:%20${encodeURIComponent(title)}`;
-
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            if (filteredPhotosList.length === 0) {
+                galleryGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; background: #111827; border-radius: 16px; border: 1px dashed rgba(212,175,55,0.3);">
+                        <i class="fa-solid fa-images" style="font-size: 3rem; color: #4b5563; margin-bottom: 15px;"></i>
+                        <h4 style="color:#fff; font-size:1.3rem;">No photos in this category yet.</h4>
+                        <p style="color:#94a3b8; margin-top:6px;">Upload photos from the Admin Portal anytime.</p>
+                    </div>
+                `;
+                return;
             }
 
-            function closeLightbox() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+            galleryGrid.innerHTML = filteredPhotosList.map((item, index) => {
+                const tagMap = {
+                    rooms: 'AC Room & Suite',
+                    corridor: 'Corridor & Lift',
+                    interior: 'Architecture',
+                    amenities: 'Facilities'
+                };
+                const tag = tagMap[item.category] || 'Ali Hotel';
 
-            galleryItems.forEach((item) => {
-                item.addEventListener('click', () => {
-                    const idx = currentVisibleItems.indexOf(item);
-                    if (idx !== -1) openLightbox(idx);
-                });
-            });
+                return `
+                    <div class="gallery-item" data-index="${index}" onclick="openDynamicLightbox(${index})">
+                        <img src="${item.src}" alt="${item.title}" loading="lazy">
+                        <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">${tag}</span>
+                            <h4 class="gallery-title">${item.title}</h4>
+                            <p class="gallery-desc">${item.desc || 'High quality authentic view at Ali Hotel'}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
-            closeBtn.addEventListener('click', closeLightbox);
-            prevBtn.addEventListener('click', () => openLightbox(currentIndex - 1));
-            nextBtn.addEventListener('click', () => openLightbox(currentIndex + 1));
+        // Lightbox Functions
+        const modal = document.getElementById('lightboxModal');
+        const modalImg = document.getElementById('lightboxImg');
+        const modalTitle = document.getElementById('lightboxTitle');
+        const modalDesc = document.getElementById('lightboxDesc');
+        const modalWhatsApp = document.getElementById('lightboxWhatsApp');
+        const closeBtn = document.getElementById('lightboxClose');
+        const prevBtn = document.getElementById('lightboxPrev');
+        const nextBtn = document.getElementById('lightboxNext');
 
+        function openDynamicLightbox(index) {
+            if (filteredPhotosList.length === 0) return;
+            currentLightboxIndex = (index + filteredPhotosList.length) % filteredPhotosList.length;
+            const item = filteredPhotosList[currentLightboxIndex];
+
+            modalImg.src = item.src;
+            modalImg.alt = item.title;
+            modalTitle.textContent = item.title;
+            modalDesc.textContent = item.desc || 'High quality authentic view at Ali Hotel';
+            modalWhatsApp.href = `https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20booking%20this%20room:%20${encodeURIComponent(item.title)}`;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDynamicLightbox() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closeDynamicLightbox);
+        if (prevBtn) prevBtn.addEventListener('click', () => openDynamicLightbox(currentLightboxIndex - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => openDynamicLightbox(currentLightboxIndex + 1));
+
+        if (modal) {
             modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeLightbox();
+                if (e.target === modal) closeDynamicLightbox();
             });
+        }
 
-            document.addEventListener('keydown', (e) => {
-                if (!modal.classList.contains('active')) return;
-                if (e.key === 'Escape') closeLightbox();
-                if (e.key === 'ArrowLeft') openLightbox(currentIndex - 1);
-                if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
+        document.addEventListener('keydown', (e) => {
+            if (!modal || !modal.classList.contains('active')) return;
+            if (e.key === 'Escape') closeDynamicLightbox();
+            if (e.key === 'ArrowLeft') openDynamicLightbox(currentLightboxIndex - 1);
+            if (e.key === 'ArrowRight') openDynamicLightbox(currentLightboxIndex + 1);
+        });
+
+        // Filter Click Handlers
+        document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.gallery-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter') || 'all';
+                renderLiveGallery(filter);
             });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderLiveGallery('all');
         });
     </script>
 </body>
