@@ -341,9 +341,185 @@
                 <button class="gallery-filter-btn" data-filter="amenities"><i class="fa-solid fa-shower"></i> Facilities & Bathrooms</button>
             </div>
 
-            <!-- Dynamic Photos Grid -->
+            <!-- Dynamic Photos Grid (Pre-rendered for instant load + Live CMS sync) -->
             <div class="gallery-grid" id="galleryGrid">
-                <!-- Dynamically populated from CMS database / LocalStorage -->
+                
+                <!-- 1. Deluxe Triple Room Blue -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/real_deluxe_triple_blue.jpg" data-title="Deluxe Triple AC Room" data-desc="Double bed + single bed with designer fluted media wall and split AC">
+                    <img src="assets/images/real_deluxe_triple_blue.jpg" alt="Deluxe Triple AC Room" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">Deluxe Triple AC Room</h4>
+                        <p class="gallery-desc">Double bed + single bed with designer fluted media wall and split AC</p>
+                    </div>
+                </div>
+
+                <!-- 2. Luxury Room Wardrobe & Console -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/real_room_console_wardrobe.jpg" data-title="Luxury AC Bedroom & Wardrobe" data-desc="Spacious layout with full wooden wardrobe, dressing mirror & LED lighting">
+                    <img src="assets/images/real_room_console_wardrobe.jpg" alt="Luxury AC Bedroom & Wardrobe" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">Luxury AC Bedroom & Wardrobe</h4>
+                        <p class="gallery-desc">Spacious layout with full wooden wardrobe, dressing mirror & LED lighting</p>
+                    </div>
+                </div>
+
+                <!-- 3. Geometric Ceiling Art -->
+                <div class="gallery-item" data-category="interior" data-src="assets/images/real_ceiling_lights_art.jpg" data-title="Geometric LED False Ceiling" data-desc="Modern geometric ceiling architecture with warm ambient LED glow">
+                    <img src="assets/images/real_ceiling_lights_art.jpg" alt="Geometric LED False Ceiling" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Architecture</span>
+                        <h4 class="gallery-title">Geometric LED False Ceiling</h4>
+                        <p class="gallery-desc">Modern geometric ceiling architecture with warm ambient LED glow</p>
+                    </div>
+                </div>
+
+                <!-- 4. Ambient Modern Cove Ceiling -->
+                <div class="gallery-item" data-category="interior" data-src="assets/images/real_modern_cove_ceiling.jpg" data-title="Ambient Modern Ceiling & Split AC" data-desc="Curved cove false ceiling with warm golden strip illumination">
+                    <img src="assets/images/real_modern_cove_ceiling.jpg" alt="Ambient Modern Ceiling & Split AC" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Architecture</span>
+                        <h4 class="gallery-title">Ambient Modern Ceiling & Split AC</h4>
+                        <p class="gallery-desc">Curved cove false ceiling with warm golden strip illumination</p>
+                    </div>
+                </div>
+
+                <!-- 5. Grand Granite & Marble Stairs -->
+                <div class="gallery-item tall" data-category="interior" data-src="assets/images/real_marble_stairs_granite.jpg" data-title="Grand Granite & Marble Staircase" data-desc="Polished dual-tone marble steps with safety railing and luxury tiles">
+                    <img src="assets/images/real_marble_stairs_granite.jpg" alt="Grand Granite & Marble Staircase" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Architecture</span>
+                        <h4 class="gallery-title">Grand Granite & Marble Staircase</h4>
+                        <p class="gallery-desc">Polished dual-tone marble steps with safety railing and luxury tiles</p>
+                    </div>
+                </div>
+
+                <!-- 6. Real Triple Room -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/real_triple_room.jpg" data-title="Deluxe Triple Bed AC Room" data-desc="Double bed + single bed with warm cove lighting">
+                    <img src="assets/images/real_triple_room.jpg" alt="Deluxe Triple Bed AC Room" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">Deluxe Triple Bed AC Room</h4>
+                        <p class="gallery-desc">Double bed + single bed with warm cove lighting</p>
+                    </div>
+                </div>
+
+                <!-- 7. 5-Bed Family Suite -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/real_family_suite_5bed.jpg" data-title="5-Bed Grand Family Suite" data-desc="Plush cushioned headboards & spacious marble layout">
+                    <img src="assets/images/real_family_suite_5bed.jpg" alt="5-Bed Grand Family Suite" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">5-Bed Grand Family Suite</h4>
+                        <p class="gallery-desc">Plush cushioned headboards & spacious marble layout</p>
+                    </div>
+                </div>
+
+                <!-- 8. Grand Marble Staircase Wood Clad -->
+                <div class="gallery-item tall" data-category="interior" data-src="assets/images/real_stairs_view.jpg" data-title="Grand Marble Staircase" data-desc="Wooden panelling, gold trim & wide marble steps">
+                    <img src="assets/images/real_stairs_view.jpg" alt="Grand Marble Staircase" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Architecture</span>
+                        <h4 class="gallery-title">Grand Marble Staircase</h4>
+                        <p class="gallery-desc">Wooden panelling, gold trim & wide marble steps</p>
+                    </div>
+                </div>
+
+                <!-- 9. Modern TV Console -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/real_room_tv_panel.jpg" data-title="Modern TV Console & AC" data-desc="Wood-fluted media panel with split air conditioner">
+                    <img src="assets/images/real_room_tv_panel.jpg" alt="Modern TV Console & AC" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">Modern TV Console & AC</h4>
+                        <p class="gallery-desc">Wood-fluted media panel with split air conditioner</p>
+                    </div>
+                </div>
+
+                <!-- 10. Ambient False Ceiling -->
+                <div class="gallery-item" data-category="interior" data-src="assets/images/real_cove_ceiling.jpg" data-title="Ambient False Ceiling" data-desc="Warm LED cove illumination & split AC system">
+                    <img src="assets/images/real_cove_ceiling.jpg" alt="Ambient False Ceiling" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Architecture</span>
+                        <h4 class="gallery-title">Ambient False Ceiling</h4>
+                        <p class="gallery-desc">Warm LED cove illumination & split AC system</p>
+                    </div>
+                </div>
+
+                <!-- 11. Luxury AC Bedroom -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/real_room_1.jpg" data-title="Luxury AC Bedroom" data-desc="King comfort with TV console panel">
+                    <img src="assets/images/real_room_1.jpg" alt="Luxury AC Bedroom" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">Luxury AC Bedroom</h4>
+                        <p class="gallery-desc">King comfort with TV console panel</p>
+                    </div>
+                </div>
+
+                <!-- 12. Modern Elevator & Corridor -->
+                <div class="gallery-item tall" data-category="corridor" data-src="assets/images/real_corridor_lift.jpg" data-title="Modern Elevator & Hallway" data-desc="Smooth elevator on every floor">
+                    <img src="assets/images/real_corridor_lift.jpg" alt="Modern Elevator & Hallway" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Corridor & Lift</span>
+                        <h4 class="gallery-title">Modern Elevator & Hallway</h4>
+                        <p class="gallery-desc">Smooth elevator on every floor</p>
+                    </div>
+                </div>
+
+                <!-- 13. Deluxe Double Room -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/real_double_room.jpg" data-title="Deluxe AC Bedroom" data-desc="Plush velvet bed headboard">
+                    <img src="assets/images/real_double_room.jpg" alt="Deluxe AC Bedroom" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">Deluxe AC Bedroom</h4>
+                        <p class="gallery-desc">Plush velvet bed headboard</p>
+                    </div>
+                </div>
+
+                <!-- 14. Guest Room Corridor -->
+                <div class="gallery-item" data-category="corridor" data-src="assets/images/real_corridor_view.jpg" data-title="Guest Room Corridor" data-desc="Bright marble floor passage">
+                    <img src="assets/images/real_corridor_view.jpg" alt="Guest Room Corridor" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Corridor & Lift</span>
+                        <h4 class="gallery-title">Guest Room Corridor</h4>
+                        <p class="gallery-desc">Bright marble floor passage</p>
+                    </div>
+                </div>
+
+                <!-- 15. 12-Bed Large Group Suite -->
+                <div class="gallery-item" data-category="rooms" data-src="assets/images/family_suite_12bed.jpg" data-title="12-Bed Large Group Suite" data-desc="Group pilgrim accommodation">
+                    <img src="assets/images/family_suite_12bed.jpg" alt="12-Bed Large Group Suite" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">AC Room & Suite</span>
+                        <h4 class="gallery-title">12-Bed Large Group Suite</h4>
+                        <p class="gallery-desc">Group pilgrim accommodation</p>
+                    </div>
+                </div>
+
+                <!-- 16. Attached Western Bathroom -->
+                <div class="gallery-item" data-category="amenities" data-src="assets/images/bathroom.jpg" data-title="Attached Western Bathroom" data-desc="Clean geyser water & Western commode">
+                    <img src="assets/images/bathroom.jpg" alt="Attached Western Bathroom" loading="lazy">
+                    <div class="gallery-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                    <div class="gallery-overlay">
+                        <span class="gallery-tag">Facilities</span>
+                        <h4 class="gallery-title">Attached Western Bathroom</h4>
+                        <p class="gallery-desc">Clean geyser water & Western commode</p>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Bottom CTA -->
@@ -400,7 +576,6 @@
                         <li><a href="amenities.html">Amenities</a></li>
                         <li><a href="reviews.html">Guest Reviews</a></li>
                         <li><a href="contact.html">Contact & Location</a></li>
-                        <li><a href="admin.html" style="color: #d4af37;"><i class="fa-solid fa-lock"></i> Admin Portal</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -419,7 +594,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Ali Hotel (Piran Kaliyar, Roorkee). All rights reserved. | <a href="admin.html" style="color: #888; text-decoration: none;">Admin Access</a></p>
+                <p>&copy; 2026 Ali Hotel (Piran Kaliyar, Roorkee). All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -457,19 +632,12 @@
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const data = JSON.parse(raw);
-                    if (data && Array.isArray(data.gallery)) {
-                        const existingSrcs = new Set(data.gallery.map(g => g.src));
-                        let added = false;
-                        DEFAULT_GALLERY.forEach(defItem => {
-                            if (!existingSrcs.has(defItem.src) && !data.deletedPhotos?.includes(defItem.src)) {
-                                data.gallery.unshift(defItem);
-                                added = true;
-                            }
-                        });
-                        if (added) {
-                            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                    if (data && Array.isArray(data.gallery) && data.gallery.length > 0) {
+                        const deleted = Array.isArray(data.deletedPhotos) ? data.deletedPhotos : [];
+                        const validPhotos = data.gallery.filter(item => item && item.src && !deleted.includes(item.src));
+                        if (validPhotos.length > 0) {
+                            return validPhotos;
                         }
-                        return data.gallery;
                     }
                 }
             } catch (err) {
@@ -487,7 +655,8 @@
             if (!galleryGrid) return;
 
             currentPhotosList = getActiveGalleryPhotos();
-            document.getElementById('count-all').textContent = currentPhotosList.length;
+            const countEl = document.getElementById('count-all');
+            if (countEl) countEl.textContent = currentPhotosList.length;
 
             filteredPhotosList = currentPhotosList.filter(item => {
                 if (filter === 'all') return true;
@@ -499,7 +668,7 @@
                     <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; background: #111827; border-radius: 16px; border: 1px dashed rgba(212,175,55,0.3);">
                         <i class="fa-solid fa-images" style="font-size: 3rem; color: #4b5563; margin-bottom: 15px;"></i>
                         <h4 style="color:#fff; font-size:1.3rem;">No photos in this category yet.</h4>
-                        <p style="color:#94a3b8; margin-top:6px;">Upload photos from the Admin Portal anytime.</p>
+                        <p style="color:#94a3b8; margin-top:6px;">All hotel photos are active in 'All Photos' tab.</p>
                     </div>
                 `;
                 return;
@@ -539,22 +708,29 @@
         const nextBtn = document.getElementById('lightboxNext');
 
         function openDynamicLightbox(index) {
-            if (filteredPhotosList.length === 0) return;
+            if (!filteredPhotosList || filteredPhotosList.length === 0) return;
             currentLightboxIndex = (index + filteredPhotosList.length) % filteredPhotosList.length;
             const item = filteredPhotosList[currentLightboxIndex];
+            if (!item) return;
 
-            modalImg.src = item.src;
-            modalImg.alt = item.title;
-            modalTitle.textContent = item.title;
-            modalDesc.textContent = item.desc || 'High quality authentic view at Ali Hotel';
-            modalWhatsApp.href = `https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20booking%20this%20room:%20${encodeURIComponent(item.title)}`;
+            if (modalImg) {
+                modalImg.src = item.src;
+                modalImg.alt = item.title;
+            }
+            if (modalTitle) modalTitle.textContent = item.title;
+            if (modalDesc) modalDesc.textContent = item.desc || 'High quality authentic view at Ali Hotel';
+            if (modalWhatsApp) {
+                modalWhatsApp.href = `https://wa.me/918077474290?text=Hello%20Ali%20Hotel,%20I%20want%20to%20inquire%20about%20booking%20this%20room:%20${encodeURIComponent(item.title)}`;
+            }
 
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeDynamicLightbox() {
-            modal.classList.remove('active');
+            if (modal) modal.classList.remove('active');
             document.body.style.overflow = '';
         }
 
@@ -585,6 +761,8 @@
             });
         });
 
+        // Render immediately
+        renderLiveGallery('all');
         document.addEventListener('DOMContentLoaded', () => {
             renderLiveGallery('all');
         });

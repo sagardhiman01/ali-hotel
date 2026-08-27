@@ -142,19 +142,25 @@ function getHotelData() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
             const data = JSON.parse(stored);
-            if (data && Array.isArray(data.gallery)) {
-                // Ensure new default photos exist in gallery if not explicitly deleted
-                const existingSrcs = new Set(data.gallery.map(g => g.src));
-                let added = false;
-                DEFAULT_HOTEL_DATA.gallery.forEach(defItem => {
-                    if (!existingSrcs.has(defItem.src) && !data.deletedPhotos?.includes(defItem.src)) {
-                        data.gallery.unshift(defItem);
-                        added = true;
-                    }
-                });
-                if (added) {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            if (data && typeof data === 'object') {
+                if (!Array.isArray(data.deletedPhotos)) data.deletedPhotos = [];
+                if (!Array.isArray(data.rooms) || data.rooms.length === 0) data.rooms = [...DEFAULT_HOTEL_DATA.rooms];
+                if (!Array.isArray(data.reviews) || data.reviews.length === 0) data.reviews = [...DEFAULT_HOTEL_DATA.reviews];
+                if (!Array.isArray(data.inquiries)) data.inquiries = [...DEFAULT_HOTEL_DATA.inquiries];
+
+                if (!Array.isArray(data.gallery) || data.gallery.length === 0) {
+                    data.gallery = [...DEFAULT_HOTEL_DATA.gallery];
+                } else {
+                    const existingSrcs = new Set(data.gallery.map(g => g.src));
+                    let added = false;
+                    DEFAULT_HOTEL_DATA.gallery.forEach(defItem => {
+                        if (!existingSrcs.has(defItem.src) && !data.deletedPhotos.includes(defItem.src)) {
+                            data.gallery.unshift(defItem);
+                            added = true;
+                        }
+                    });
                 }
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                 return data;
             }
         }
@@ -314,37 +320,43 @@ function loadDashboardStats() {
 // GENERAL INFO & CONTACTS
 // ===================================================
 function loadGeneralSettings() {
-    const g = hotelData.general;
-    document.getElementById("inputHotelName").value = g.hotelName || "Ali Hotel";
-    document.getElementById("inputTagline").value = g.tagline || "";
-    document.getElementById("inputRoomCount").value = g.roomCount || "18";
-    document.getElementById("inputOwner1Name").value = g.owner1Name || "";
-    document.getElementById("inputOwner1Phone").value = g.owner1Phone || "";
-    document.getElementById("inputOwner2Name").value = g.owner2Name || "";
-    document.getElementById("inputOwner2Phone").value = g.owner2Phone || "";
-    document.getElementById("inputOwner3Name").value = g.owner3Name || "";
-    document.getElementById("inputOwner3Phone").value = g.owner3Phone || "";
-    document.getElementById("inputEmail").value = g.email || "";
-    document.getElementById("inputAddress").value = g.address || "";
-    document.getElementById("inputGoogleMaps").value = g.googleMapsUrl || "";
-    document.getElementById("inputWhatsApp").value = g.whatsappNumber || "";
+    const g = hotelData.general || {};
+    const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val || "";
+    };
+
+    setVal("inputHotelName", g.hotelName || "Ali Hotel");
+    setVal("inputTagline", g.tagline || "A Family Stay Hotel");
+    setVal("inputRoomCount", g.roomCount || "18");
+    setVal("inputOwner1Name", g.owner1Name || "Haji Abdul Samad");
+    setVal("inputOwner1Phone", g.owner1Phone || "+91 8077474290");
+    setVal("inputOwner2Name", g.owner2Name || "Mohd Shadab");
+    setVal("inputOwner2Phone", g.owner2Phone || "+91 7017934425");
+    setVal("inputEmail", g.email || "alihotelpirankaliyar@gmail.com");
+    setVal("inputAddress", g.address || "Near VIP Chowk, Sohalpur Road, Piran Kaliyar Shareef, Roorkee - 247667 (UK)");
+    setVal("inputGoogleMaps", g.googleMapsUrl || "https://share.google/wbQLk41U9Xn9ircUh");
+    setVal("inputWhatsApp", g.whatsappNumber || "918077474290");
 }
 
 function saveGeneralSettings() {
+    const getVal = (id, fallback = "") => {
+        const el = document.getElementById(id);
+        return el ? el.value.trim() : fallback;
+    };
+
     hotelData.general = {
-        hotelName: document.getElementById("inputHotelName").value.trim(),
-        tagline: document.getElementById("inputTagline").value.trim(),
-        roomCount: document.getElementById("inputRoomCount").value.trim(),
-        owner1Name: document.getElementById("inputOwner1Name").value.trim(),
-        owner1Phone: document.getElementById("inputOwner1Phone").value.trim(),
-        owner2Name: document.getElementById("inputOwner2Name").value.trim(),
-        owner2Phone: document.getElementById("inputOwner2Phone").value.trim(),
-        owner3Name: document.getElementById("inputOwner3Name").value.trim(),
-        owner3Phone: document.getElementById("inputOwner3Phone").value.trim(),
-        email: document.getElementById("inputEmail").value.trim(),
-        address: document.getElementById("inputAddress").value.trim(),
-        googleMapsUrl: document.getElementById("inputGoogleMaps").value.trim(),
-        whatsappNumber: document.getElementById("inputWhatsApp").value.trim()
+        hotelName: getVal("inputHotelName", "Ali Hotel"),
+        tagline: getVal("inputTagline", "A Family Stay Hotel"),
+        roomCount: getVal("inputRoomCount", "18"),
+        owner1Name: getVal("inputOwner1Name", "Haji Abdul Samad"),
+        owner1Phone: getVal("inputOwner1Phone", "+91 8077474290"),
+        owner2Name: getVal("inputOwner2Name", "Mohd Shadab"),
+        owner2Phone: getVal("inputOwner2Phone", "+91 7017934425"),
+        email: getVal("inputEmail", "alihotelpirankaliyar@gmail.com"),
+        address: getVal("inputAddress", "Near VIP Chowk, Sohalpur Road, Piran Kaliyar Shareef, Roorkee - 247667 (UK)"),
+        googleMapsUrl: getVal("inputGoogleMaps", "https://share.google/wbQLk41U9Xn9ircUh"),
+        whatsappNumber: getVal("inputWhatsApp", "918077474290")
     };
     saveHotelData(hotelData);
 }
@@ -910,5 +922,9 @@ function resetToFactoryDefaults() {
         saveHotelData(hotelData);
         window.location.reload();
     }
+}
+
+function resetHotelDataToDefaults() {
+    resetToFactoryDefaults();
 }
 
