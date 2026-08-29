@@ -69,6 +69,10 @@ const DEFAULT_HOTEL_DATA = {
         }
     ],
     gallery: [
+        { id: "g_pink_tv", title: "Luxury AC Room with TV Wall Panel", category: "rooms", src: "assets/images/real_pink_room_tv.jpg", desc: "Plush pink velvet headboard with designer fluted TV media wall" },
+        { id: "g_family_4bed", title: "Spacious 4-Bed Family AC Suite", category: "rooms", src: "assets/images/real_family_4bed_suite.jpg", desc: "King bed + 2 single beds, designer ceiling & window curtains" },
+        { id: "g_pink_closeup", title: "Deluxe King Bed & Intercom", category: "rooms", src: "assets/images/real_pink_bed_closeup.jpg", desc: "Geometric velvet headboard, telephone & marble wall finish" },
+        { id: "g_floor3_corridor", title: "3rd Floor Lift & Guest Corridor", category: "corridor", src: "assets/images/real_floor3_corridor_lift.jpg", desc: "Modern elevator lobby and pristine marble floor hallway" },
         { id: "g_blue_triple", title: "Deluxe Triple AC Room", category: "rooms", src: "assets/images/real_deluxe_triple_blue.jpg", desc: "Double bed + single bed with designer fluted media wall and split AC" },
         { id: "g_console_wardrobe", title: "Luxury AC Bedroom & Wardrobe", category: "rooms", src: "assets/images/real_room_console_wardrobe.jpg", desc: "Spacious layout with full wooden wardrobe, dressing mirror & LED lighting" },
         { id: "g_ceiling_art", title: "Geometric LED False Ceiling", category: "interior", src: "assets/images/real_ceiling_lights_art.jpg", desc: "Modern geometric ceiling architecture with warm ambient LED glow" },
