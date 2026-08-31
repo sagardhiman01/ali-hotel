@@ -1,81 +1,137 @@
 // ========================================
-// MOBILE MENU DRAWER CONTROLLER
+// MOBILE MENU DRAWER CONTROLLER (TOUCH & DESKTOP COMPATIBLE)
 // ========================================
-const mobileMenu = document.getElementById('mobile-menu');
-const navLinks = document.querySelector('.nav-links');
-
-// Create backdrop overlay if not present in HTML
-let navOverlay = document.getElementById('nav-overlay');
-if (!navOverlay) {
-    navOverlay = document.createElement('div');
-    navOverlay.id = 'nav-overlay';
-    navOverlay.className = 'nav-overlay';
-    document.body.appendChild(navOverlay);
-}
-
-function openMobileMenu() {
-    if (navLinks) navLinks.classList.add('active');
-    if (mobileMenu) {
-        mobileMenu.classList.add('active');
-        mobileMenu.setAttribute('aria-expanded', 'true');
+function initMobileNavigation() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    // Ensure overlay element exists
+    let navOverlay = document.getElementById('nav-overlay');
+    if (!navOverlay) {
+        navOverlay = document.createElement('div');
+        navOverlay.id = 'nav-overlay';
+        navOverlay.className = 'nav-overlay';
+        document.body.appendChild(navOverlay);
     }
-    if (navOverlay) navOverlay.classList.add('active');
-    document.body.classList.add('menu-open');
-}
 
-function closeMobileMenu() {
-    if (navLinks) navLinks.classList.remove('active');
+    // Inject mobile drawer header (close button & branding) into nav-links if not present
+    if (navLinks && !navLinks.querySelector('.drawer-header')) {
+        const drawerHeader = document.createElement('li');
+        drawerHeader.className = 'drawer-header';
+        drawerHeader.innerHTML = `
+            <div class="drawer-branding">
+                <img src="assets/images/logo.jpg" alt="Ali Hotel Logo" class="drawer-logo-img">
+                <span class="drawer-logo-text">Ali Hotel</span>
+            </div>
+            <button type="button" class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close Menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        `;
+        navLinks.prepend(drawerHeader);
+
+        const drawerCloseBtn = drawerHeader.querySelector('#drawerCloseBtn');
+        if (drawerCloseBtn) {
+            drawerCloseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMobileMenu();
+            });
+        }
+    }
+
+    function openMobileMenu() {
+        if (navLinks) navLinks.classList.add('active');
+        if (mobileMenu) {
+            mobileMenu.classList.add('active');
+            mobileMenu.setAttribute('aria-expanded', 'true');
+        }
+        if (navOverlay) navOverlay.classList.add('active');
+        document.body.classList.add('menu-open');
+    }
+
+    function closeMobileMenu() {
+        if (navLinks) navLinks.classList.remove('active');
+        if (mobileMenu) {
+            mobileMenu.classList.remove('active');
+            mobileMenu.setAttribute('aria-expanded', 'false');
+        }
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
+
+    function toggleMobileMenu() {
+        if (navLinks && navLinks.classList.contains('active')) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    }
+
     if (mobileMenu) {
-        mobileMenu.classList.remove('active');
+        mobileMenu.setAttribute('aria-label', 'Toggle Navigation Menu');
         mobileMenu.setAttribute('aria-expanded', 'false');
+        
+        // Remove previous listeners if any and add fresh ones
+        mobileMenu.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMobileMenu();
+        };
     }
-    if (navOverlay) navOverlay.classList.remove('active');
-    document.body.classList.remove('menu-open');
-}
 
-function toggleMobileMenu() {
-    if (navLinks && navLinks.classList.contains('active')) {
-        closeMobileMenu();
-    } else {
-        openMobileMenu();
+    if (navOverlay) {
+        navOverlay.onclick = (e) => {
+            e.preventDefault();
+            closeMobileMenu();
+        };
     }
-}
 
-if (mobileMenu) {
-    mobileMenu.setAttribute('aria-label', 'Toggle Navigation Menu');
-    mobileMenu.setAttribute('aria-expanded', 'false');
-    mobileMenu.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMobileMenu();
+    // Close menu when clicking nav links
+    if (navLinks) {
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        });
+
+        // Touch swipe-to-close gesture on mobile drawer
+        let drawerTouchStartX = 0;
+        let drawerTouchEndX = 0;
+
+        navLinks.addEventListener('touchstart', (e) => {
+            drawerTouchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        navLinks.addEventListener('touchend', (e) => {
+            drawerTouchEndX = e.changedTouches[0].screenX;
+            // Swiping right (towards off-screen) closes drawer
+            if (drawerTouchEndX - drawerTouchStartX > 60) {
+                closeMobileMenu();
+            }
+        }, { passive: true });
+    }
+
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileMenu();
+        }
+    });
+
+    // Close drawer if resized to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            closeMobileMenu();
+        }
     });
 }
 
-if (navOverlay) {
-    navOverlay.addEventListener('click', () => {
-        closeMobileMenu();
-    });
+// Initialize on DOM ready and immediately
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileNavigation);
+} else {
+    initMobileNavigation();
 }
-
-// Close mobile menu when a nav link is clicked
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        closeMobileMenu();
-    });
-});
-
-// Close menu on Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        closeMobileMenu();
-    }
-});
-
-// Close drawer if window is resized to desktop
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        closeMobileMenu();
-    }
-});
 
 // Header scroll effect
 const header = document.getElementById('header');
