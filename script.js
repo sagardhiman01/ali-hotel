@@ -408,6 +408,7 @@ function initDargahCarousel() {
             startAutoSlide();
         }, { passive: true });
     }
+}
 
 // ========================================
 // DYNAMIC HOME PAGE REVIEWS LOADER
