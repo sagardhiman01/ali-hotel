@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Portal | Ali Hotel - Piran Kaliyar</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Admin Stylesheet -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- SECURE AUTH LOGIN OVERLAY -->
+    <div class="admin-auth-overlay" id="authOverlay">
+        <div class="admin-auth-box">
+            <img src="assets/images/logo.jpg" alt="Ali Hotel Logo" class="admin-auth-logo">
+            <h2>Ali Hotel Super Admin</h2>
+            <p>Enter Master Passcode to manage the website</p>
+
+            <form id="passcodeForm">
+                <div class="auth-form-group">
+                    <label for="passcodeInput">Security Passcode / PIN</label>
+                    <div class="auth-input-wrap">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="passcodeInput" placeholder="Enter master PIN..." required autofocus>
+                        <button type="button" class="toggle-password-btn" id="togglePassBtn" aria-label="Toggle Passcode"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <button type="submit" class="auth-submit-btn">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login to Admin Portal
+                </button>
+                <div class="auth-error-msg" id="authError">Incorrect Passcode! Please try again.</div>
+                <div class="auth-hint">Default Passcode: <code>ali@2026</code> or <code>8077474290</code></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.jpg" alt="Logo" class="sidebar-logo">
+            <div class="sidebar-title">
+                <h3>Ali Hotel</h3>
+                <span>Super Admin</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-item active" data-tab="overview">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Overview & Stats</span>
+            </div>
+            <div class="nav-item" data-tab="general">
+                <i class="fa-solid fa-sliders"></i>
+                <span>Hotel Info & Contacts</span>
+            </div>
+            <div class="nav-item" data-tab="rooms">
+                <i class="fa-solid fa-bed"></i>
+                <span>Rooms & Pricing</span>
+            </div>
+            <div class="nav-item" data-tab="gallery">
+                <i class="fa-solid fa-images"></i>
+                <span>Photo Gallery</span>
+            </div>
+            <div class="nav-item" data-tab="inquiries">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Guest Inquiries & CRM</span>
+            </div>
+            <div class="nav-item" data-tab="reviews">
+                <i class="fa-solid fa-star"></i>
+                <span>Customer Reviews</span>
+            </div>
+            <div class="nav-item" data-tab="offers">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Offers & Top Banner</span>
+            </div>
+            <div class="nav-item" data-tab="backup">
+                <i class="fa-solid fa-database"></i>
+                <span>Backup & Reset</span>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="index.html" target="_blank" class="btn-view-site">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Live Website
+            </a>
+            <button class="btn-logout" id="logoutBtn">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN ADMIN CONTENT AREA -->
+    <main class="admin-main">
+
+        <!-- Topbar -->
+        <div class="admin-topbar">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <button class="mobile-sidebar-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="topbar-title">
+                    <h1>Super Admin Control Panel</h1>
+                    <p>Live Content Management System for Ali Hotel (Piran Kaliyar, Roorkee)</p>
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <button class="btn-save-all" onclick="showToast('Website database synced and saved!')">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Sync & Save
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 1: OVERVIEW & STATS -->
+        <div class="tab-panel active" id="tab-overview">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-hotel"></i></div>
+                    <div class="stat-info">
+                        <h4>Total Rooms</h4>
+                        <div class="stat-number" id="statTotalRooms">4</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-images"></i></div>
+                    <div class="stat-info">
+                        <h4>Gallery Photos</h4>
+                        <div class="stat-number" id="statGalleryPhotos">11</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-address-book"></i></div>
+                    <div class="stat-info">
+                        <h4>Guest Inquiries</h4>
+                        <div class="stat-number" id="statInquiries">2</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="stat-info">
+                        <h4>Google Reviews</h4>
+                        <div class="stat-number" id="statReviews">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Access Cards -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:25px;">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3><i class="fa-solid fa-bolt" style="color:#d4af37;"></i> Quick Actions</h3>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <button class="btn-add" onclick="openRoomModal()"><i class="fa-solid fa-plus"></i> Add New Room Category</button>
+                        <button class="btn-add" style="background:#3b82f6; color:#fff;" onclick="openGalleryModal()"><i class="fa-solid fa-camera"></i> Upload / Add Gallery Photo</button>
+                        <button class="btn-add" style="background:#10b981; color:#fff;" onclick="openReviewModal()"><i class="fa-solid fa-comment-dots"></i> Add Real Customer Review</button>
+                        <button class="btn-add" style="background:rgba(239, 68, 68, 0.85); color:#fff;" onclick="resetHotelDataToDefaults()"><i class="fa-solid fa-rotate-left"></i> Restore Default Photos & Data</button>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3><i class="fa-solid fa-circle-info" style="color:#d4af37;"></i> Hotel Status & Location</h3>
+                    </div>
+                    <p style="color:#cbd5e1; font-size:0.95rem; line-height:1.6;">
+                        <strong>Location:</strong> Near VIP Chowk, Sohalpur Road, Piran Kaliyar Shareef, Roorkee<br>
+                        <strong>Total Capacity:</strong> 18 AC Rooms with 24/7 Power Backup, Modern Lift & Parking.<br>
+                        <strong>Google Rating:</strong> ⭐⭐⭐⭐⭐ 5.0 Star Verified
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: HOTEL INFO & CONTACTS -->
+        <div class="tab-panel" id="tab-general">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-pen-to-square"></i> General Information & Owner Contacts</h3>
+                    <button class="btn-add" onclick="saveGeneralSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Info</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Hotel Name</label>
+                        <input type="text" id="inputHotelName" value="Ali Hotel">
+                    </div>
+                    <div class="form-group">
+                        <label>Tagline</label>
+                        <input type="text" id="inputTagline" value="A Family Stay Hotel">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Room Count</label>
+                        <input type="number" id="inputRoomCount" value="18">
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Quick-Chat Number</label>
+                        <input type="text" id="inputWhatsApp" value="918077474290">
+                    </div>
+                    <div class="form-group">
+                        <label>Owner 1 Name & Phone (Haji Abdul Samad)</label>
+                        <input type="text" id="inputOwner1Name" value="Haji Abdul Samad">
+                        <input type="text" id="inputOwner1Phone" value="+91 8077474290" style="margin-top:6px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Owner 2 Name & Phone (Mohd Shadab)</label>
+                        <input type="text" id="inputOwner2Name" value="Mohd Shadab">
+                        <input type="text" id="inputOwner2Phone" value="+91 7017934425" style="margin-top:6px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="inputEmail" value="alihotelpirankaliyar@gmail.com">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Full Address</label>
+                        <input type="text" id="inputAddress" value="Near VIP Chowk, Sohalpur Road, Piran Kaliyar Shareef, Roorkee - 247667 (UK)">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Google Business Profile URL</label>
+                        <input type="text" id="inputGoogleMaps" value="https://share.google/wbQLk41U9Xn9ircUh">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: ROOMS & PRICING -->
+        <div class="tab-panel" id="tab-rooms">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-bed"></i> Room Inventory & Per-Night Rates</h3>
+                    <button class="btn-add" onclick="openRoomModal()"><i class="fa-solid fa-plus"></i> Add New Room</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Room Type & Capacity</th>
+                                <th>Price (₹)</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="roomsTableBody">
+                            <!-- Populated dynamically via admin.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: PHOTO GALLERY -->
+        <div class="tab-panel" id="tab-gallery">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-images"></i> Manage Photo Gallery</h3>
+                    <button class="btn-add" onclick="openGalleryModal()"><i class="fa-solid fa-camera"></i> + Upload / Add Photo</button>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:18px;" id="adminGalleryGrid">
+                    <!-- Populated dynamically via admin.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: GUEST INQUIRIES & CRM -->
+        <div class="tab-panel" id="tab-inquiries">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-envelope-open-text"></i> Guest Booking Inquiries & Leads</h3>
+                    <button class="btn-add" style="background:#3b82f6; color:#fff;" onclick="exportInquiriesCSV()"><i class="fa-solid fa-file-csv"></i> Export to CSV</button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Guest Name</th>
+                                <th>Contact Phone</th>
+                                <th>Room Requested</th>
+                                <th>Check-In & Guests</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inquiriesTableBody">
+                            <!-- Populated dynamically via admin.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: CUSTOMER REVIEWS -->
+        <div class="tab-panel" id="tab-reviews">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-star"></i> Customer Testimonials & Google Reviews</h3>
+                    <button class="btn-add" onclick="openReviewModal()"><i class="fa-solid fa-plus"></i> Add New Review</button>
+                </div>
+                <div id="adminReviewsList">
+                    <!-- Populated dynamically via admin.js -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: SPECIAL OFFERS & ANNOUNCEMENT BAR -->
+        <div class="tab-panel" id="tab-offers">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-bullhorn"></i> Top Announcement Banner & Special Offers</h3>
+                    <button class="btn-add" onclick="saveOffersSettings()"><i class="fa-solid fa-floppy-disk"></i> Save Offer</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full-width" style="display:flex; flex-direction:row; align-items:center; gap:12px;">
+                        <input type="checkbox" id="toggleAnnouncement" style="width:20px; height:20px; cursor:pointer;">
+                        <label for="toggleAnnouncement" style="cursor:pointer; font-size:1rem; color:#fff;">Enable Top Announcement Banner on Live Website</label>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Announcement Banner Message</label>
+                        <input type="text" id="inputAnnouncementText" value="✨ Special Urs Mubarak & Weekend Bookings Open! Direct Call & WhatsApp for Instant 15% OFF">
+                    </div>
+                    <div class="form-group">
+                        <label>Discount Promo Code</label>
+                        <input type="text" id="inputCouponCode" value="ALI15">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 8: BACKUP & RESET -->
+        <div class="tab-panel" id="tab-backup">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-database"></i> Database Backup & System Reset</h3>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:20px;">
+                    <div>
+                        <h4 style="color:#fff; margin-bottom:8px;">Export Database Backup (JSON)</h4>
+                        <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:12px;">Download a complete backup file of all rooms, photos, pricing, contacts, and inquiries.</p>
+                        <button class="btn-add" onclick="exportDatabaseBackup()"><i class="fa-solid fa-download"></i> Download Backup JSON</button>
+                    </div>
+                    <hr style="border-color:rgba(255,255,255,0.08);">
+                    <div>
+                        <h4 style="color:#fff; margin-bottom:8px;">Restore from Backup File</h4>
+                        <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:12px;">Upload a previously downloaded `.json` backup file to restore data.</p>
+                        <input type="file" id="importJsonInput" accept=".json" style="display:none;" onchange="importDatabaseBackup(event)">
+                        <button class="btn-add" style="background:#3b82f6; color:#fff;" onclick="document.getElementById('importJsonInput').click()"><i class="fa-solid fa-upload"></i> Upload & Restore JSON</button>
+                    </div>
+                    <hr style="border-color:rgba(255,255,255,0.08);">
+                    <div>
+                        <h4 style="color:#ef4444; margin-bottom:8px;">Factory Reset</h4>
+                        <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:12px;">Reset all settings and rooms back to original factory defaults.</p>
+                        <button class="btn-action delete" style="padding:10px 18px; font-weight:600;" onclick="resetToFactoryDefaults()"><i class="fa-solid fa-triangle-exclamation"></i> Reset to Factory Defaults</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ===================================================
+         IN-PAGE INTERACTIVE MODALS (NO BROWSER POPUPS)
+         =================================================== -->
+
+    <!-- 1. ROOM ADD / EDIT MODAL -->
+    <div class="admin-modal-overlay" id="roomModalOverlay">
+        <div class="admin-modal">
+            <div class="admin-modal-header">
+                <h3 id="roomModalTitle"><i class="fa-solid fa-bed" style="color:#d4af37;"></i> Add New Room</h3>
+                <button type="button" class="admin-modal-close" onclick="closeRoomModal()">&times;</button>
+            </div>
+            <form id="roomForm" onsubmit="handleRoomFormSubmit(event)">
+                <input type="hidden" id="roomEditIndex" value="-1">
+                
+                <div class="modal-form-grid">
+                    <div class="form-group full-width">
+                        <label for="modalRoomTitle"><i class="fa-solid fa-tag" style="color:#d4af37;"></i> Room Title / Name *</label>
+                        <input type="text" id="modalRoomTitle" placeholder="e.g. Deluxe Triple AC Room" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalRoomPrice"><i class="fa-solid fa-indian-rupee-sign" style="color:#d4af37;"></i> Price Per Night (₹) *</label>
+                        <input type="number" id="modalRoomPrice" placeholder="e.g. 1499" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalRoomStatus"><i class="fa-solid fa-circle-check" style="color:#d4af37;"></i> Room Status</label>
+                        <select id="modalRoomStatus">
+                            <option value="available">🟢 Available for Booking</option>
+                            <option value="booked">🔴 Booked / Occupied</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalRoomBedsSelect"><i class="fa-solid fa-users" style="color:#d4af37;"></i> Bed & Guest Capacity</label>
+                        <select id="modalRoomBedsSelect" onchange="handleBedsSelectChange(this)">
+                            <option value="1 King Bed (2 Guests)">1 King Bed (2 Guests)</option>
+                            <option value="1 Double Bed + 1 Single Bed (3 Guests)" selected>1 Double Bed + 1 Single Bed (3 Guests)</option>
+                            <option value="2 Double Beds (4 Guests)">2 Double Beds (4 Guests)</option>
+                            <option value="Olive Velvet Headboard Beds (5 Guests)">5-Bed Family Suite (5 Guests)</option>
+                            <option value="Multiple Beds (12 Guests)">12-Bed Large Group Suite (12 Guests)</option>
+                            <option value="custom">✏️ Custom Capacity...</option>
+                        </select>
+                        <input type="text" id="modalRoomBedsCustom" placeholder="Enter custom bed details..." style="display:none; margin-top:8px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalRoomBadge"><i class="fa-solid fa-certificate" style="color:#d4af37;"></i> Badge / Highlight Tag</label>
+                        <select id="modalRoomBadge">
+                            <option value="Best Seller">Best Seller</option>
+                            <option value="Popular Choice" selected>Popular Choice</option>
+                            <option value="Family Favorite">Family Favorite</option>
+                            <option value="Grand Group Suite">Grand Group Suite</option>
+                            <option value="Recommended">Recommended</option>
+                            <option value="">None</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="modalRoomDesc"><i class="fa-solid fa-align-left" style="color:#d4af37;"></i> Room Description</label>
+                        <textarea id="modalRoomDesc" rows="2" placeholder="Comfortable AC room with attached bathroom, clean bedding, and 24/7 power backup."></textarea>
+                    </div>
+
+                    <!-- Room Photo Upload / Selector -->
+                    <div class="form-group full-width">
+                        <label><i class="fa-solid fa-camera" style="color:#d4af37;"></i> Room Photo (Select from Gallery or Mobile Camera)</label>
+                        
+                        <!-- Upload Dropzone (Click to pick file from Mobile Gallery/PC) -->
+                        <div class="upload-dropzone" id="roomDropzone" onclick="document.getElementById('roomFileInput').click()">
+                            <input type="file" id="roomFileInput" accept="image/*" style="display:none;" onchange="handleRoomFileSelect(event)">
+                            <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                            <h4>📱 Tap to Choose Photo from Mobile Gallery / PC</h4>
+                            <p>Direct upload from your phone photo gallery or camera</p>
+                        </div>
+
+                        <!-- Image Preview Box -->
+                        <div class="image-preview-box" id="roomPreviewBox" style="display:none;">
+                            <img id="roomPreviewImg" src="" alt="Room Preview">
+                            <button type="button" class="btn-remove-preview" onclick="removeRoomImage()"><i class="fa-solid fa-xmark"></i> Remove</button>
+                        </div>
+
+                        <!-- Existing Photo Selector Dropdown -->
+                        <div style="margin-top: 10px;">
+                            <label style="font-size:0.8rem; color:#94a3b8;">Or select from hotel photos already saved:</label>
+                            <select id="modalRoomExistingPhoto" onchange="handleRoomExistingPhotoChange(this)" style="margin-top:4px;">
+                                <option value="">-- Choose Existing Hotel Photo --</option>
+                                <option value="assets/images/real_pink_room_tv.jpg">Luxury AC Room with Pink Headboard & TV Wall (New)</option>
+                                <option value="assets/images/real_family_4bed_suite.jpg">Spacious 4-Bed Family AC Suite (New)</option>
+                                <option value="assets/images/real_pink_bed_closeup.jpg">Deluxe King Bed Close-up & Intercom (New)</option>
+                                <option value="assets/images/real_floor3_corridor_lift.jpg">3rd Floor Lift & Corridor C-301 (New)</option>
+                                <option value="assets/images/real_deluxe_triple_blue.jpg">Deluxe Triple Room - Blue Bedspread & Fluted Wall</option>
+                                <option value="assets/images/real_room_console_wardrobe.jpg">Luxury AC Room with Wardrobe & Console</option>
+                                <option value="assets/images/real_ceiling_lights_art.jpg">Geometric LED False Ceiling</option>
+                                <option value="assets/images/real_modern_cove_ceiling.jpg">Ambient Modern Cove Ceiling & AC</option>
+                                <option value="assets/images/real_marble_stairs_granite.jpg">Grand Marble & Granite Staircase</option>
+                                <option value="assets/images/real_triple_room.jpg">Deluxe Triple Room (real_triple_room.jpg)</option>
+                                <option value="assets/images/real_family_suite_5bed.jpg">5-Bed Family Suite (real_family_suite_5bed.jpg)</option>
+                                <option value="assets/images/real_room_1.jpg">Deluxe AC Bedroom (real_room_1.jpg)</option>
+                                <option value="assets/images/real_room_tv_panel.jpg">Room with TV Console (real_room_tv_panel.jpg)</option>
+                                <option value="assets/images/real_double_room.jpg">Velvet Double Room (real_double_room.jpg)</option>
+                                <option value="assets/images/real_family_room.jpg">Family Room (real_family_room.jpg)</option>
+                                <option value="assets/images/family_suite_12bed.jpg">12-Bed Hall (family_suite_12bed.jpg)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" onclick="closeRoomModal()">Cancel</button>
+                    <button type="submit" class="btn-modal-save"><i class="fa-solid fa-floppy-disk"></i> Save Room</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. GALLERY PHOTO ADD MODAL -->
+    <div class="admin-modal-overlay" id="galleryModalOverlay">
+        <div class="admin-modal">
+            <div class="admin-modal-header">
+                <h3><i class="fa-solid fa-images" style="color:#d4af37;"></i> Upload Photo to Gallery</h3>
+                <button type="button" class="admin-modal-close" onclick="closeGalleryModal()">&times;</button>
+            </div>
+            <form id="galleryForm" onsubmit="handleGalleryFormSubmit(event)">
+                <div class="modal-form-grid">
+                    <div class="form-group full-width">
+                        <label for="modalGalleryTitle"><i class="fa-solid fa-heading" style="color:#d4af37;"></i> Photo Title / Caption *</label>
+                        <input type="text" id="modalGalleryTitle" placeholder="e.g. Deluxe Room Bedding & Ambience" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalGalleryCategory"><i class="fa-solid fa-layer-group" style="color:#d4af37;"></i> Category Filter *</label>
+                        <select id="modalGalleryCategory" required>
+                            <option value="rooms">🛏️ AC Rooms & Suites</option>
+                            <option value="corridor">🚪 Corridors & Lift</option>
+                            <option value="interior">🪜 Stairs & Interior Architecture</option>
+                            <option value="amenities">🚿 Facilities & Bathrooms</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalGalleryDesc"><i class="fa-solid fa-comment-dots" style="color:#d4af37;"></i> Short Subtitle</label>
+                        <input type="text" id="modalGalleryDesc" placeholder="e.g. Spacious marble floor layout with split AC">
+                    </div>
+
+                    <!-- Photo Upload File Zone -->
+                    <div class="form-group full-width">
+                        <label><i class="fa-solid fa-image" style="color:#d4af37;"></i> Choose Photo from Mobile Gallery / PC *</label>
+                        
+                        <div class="upload-dropzone" id="galleryDropzone" onclick="document.getElementById('galleryFileInput').click()">
+                            <input type="file" id="galleryFileInput" accept="image/*" style="display:none;" onchange="handleGalleryFileSelect(event)">
+                            <i class="fa-solid fa-file-image dropzone-icon"></i>
+                            <h4>📱 Tap Here to Select Photo from Mobile Gallery</h4>
+                            <p>Direct access to your smartphone photos or computer files</p>
+                        </div>
+
+                        <!-- Image Preview Box -->
+                        <div class="image-preview-box" id="galleryPreviewBox" style="display:none;">
+                            <img id="galleryPreviewImg" src="" alt="Gallery Preview">
+                            <button type="button" class="btn-remove-preview" onclick="removeGalleryImage()"><i class="fa-solid fa-xmark"></i> Remove</button>
+                        </div>
+
+                        <!-- Existing Photo Selector Dropdown -->
+                        <div style="margin-top: 10px;">
+                            <label style="font-size:0.8rem; color:#94a3b8;">Or select from hotel photos on server:</label>
+                            <select id="modalGalleryExistingPhoto" onchange="handleGalleryExistingPhotoChange(this)" style="margin-top:4px;">
+                                <option value="">-- Or Pick Existing Image --</option>
+                                <option value="assets/images/real_pink_room_tv.jpg">Luxury AC Room with Pink Headboard & TV Wall (New)</option>
+                                <option value="assets/images/real_family_4bed_suite.jpg">Spacious 4-Bed Family AC Suite (New)</option>
+                                <option value="assets/images/real_pink_bed_closeup.jpg">Deluxe King Bed Close-up & Intercom (New)</option>
+                                <option value="assets/images/real_floor3_corridor_lift.jpg">3rd Floor Lift & Corridor C-301 (New)</option>
+                                <option value="assets/images/real_deluxe_triple_blue.jpg">Deluxe Triple AC Room (Blue Bedspread)</option>
+                                <option value="assets/images/real_room_console_wardrobe.jpg">Luxury AC Room with Wardrobe Console</option>
+                                <option value="assets/images/real_ceiling_lights_art.jpg">Geometric LED False Ceiling</option>
+                                <option value="assets/images/real_modern_cove_ceiling.jpg">Ambient Modern Ceiling & Split AC</option>
+                                <option value="assets/images/real_marble_stairs_granite.jpg">Grand Marble & Granite Staircase</option>
+                                <option value="assets/images/real_triple_room.jpg">Deluxe Triple Bed Room</option>
+                                <option value="assets/images/real_family_suite_5bed.jpg">5-Bed Family Suite</option>
+                                <option value="assets/images/real_stairs_view.jpg">Grand Marble Staircase with Wood</option>
+                                <option value="assets/images/real_room_tv_panel.jpg">Modern TV Console</option>
+                                <option value="assets/images/real_cove_ceiling.jpg">Ambient False Ceiling</option>
+                                <option value="assets/images/real_room_1.jpg">Luxury AC Bedroom</option>
+                                <option value="assets/images/real_corridor_lift.jpg">Elevator & Corridor</option>
+                                <option value="assets/images/real_double_room.jpg">Velvet Double Room</option>
+                                <option value="assets/images/real_corridor_view.jpg">Corridor Passage</option>
+                                <option value="assets/images/real_family_room.jpg">Family Suite</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" onclick="closeGalleryModal()">Cancel</button>
+                    <button type="submit" class="btn-modal-save"><i class="fa-solid fa-plus"></i> Add to Gallery</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. CUSTOMER REVIEW MODAL -->
+    <div class="admin-modal-overlay" id="reviewModalOverlay">
+        <div class="admin-modal" style="max-width: 500px;">
+            <div class="admin-modal-header">
+                <h3><i class="fa-solid fa-comment-dots" style="color:#d4af37;"></i> Add Customer Review</h3>
+                <button type="button" class="admin-modal-close" onclick="closeReviewModal()">&times;</button>
+            </div>
+            <form id="reviewForm" onsubmit="handleReviewFormSubmit(event)">
+                <div class="modal-form-grid" style="grid-template-columns: 1fr;">
+                    <div class="form-group">
+                        <label for="modalReviewAuthor"><i class="fa-solid fa-user" style="color:#d4af37;"></i> Guest Full Name *</label>
+                        <input type="text" id="modalReviewAuthor" placeholder="e.g. Salman Malik" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalReviewCity"><i class="fa-solid fa-city" style="color:#d4af37;"></i> City / State *</label>
+                        <input type="text" id="modalReviewCity" placeholder="e.g. Delhi NCR" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalReviewRating"><i class="fa-solid fa-star" style="color:#d4af37;"></i> Star Rating</label>
+                        <select id="modalReviewRating">
+                            <option value="5">⭐⭐⭐⭐⭐ 5.0 Star (Excellent)</option>
+                            <option value="4">⭐⭐⭐⭐ 4.0 Star (Very Good)</option>
+                            <option value="3">⭐⭐⭐ 3.0 Star (Good)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modalReviewText"><i class="fa-solid fa-message" style="color:#d4af37;"></i> Review Testimonial *</label>
+                        <textarea id="modalReviewText" rows="3" placeholder="Write the guest feedback here..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" onclick="closeReviewModal()">Cancel</button>
+                    <button type="submit" class="btn-modal-save"><i class="fa-solid fa-floppy-disk"></i> Save Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="admin-toast" id="adminToast">
+        ✅ Changes saved successfully!
+    </div>
+
+    <!-- Admin JS Engine -->
+    <script src="admin.js"></script>
+</body>
+</html>

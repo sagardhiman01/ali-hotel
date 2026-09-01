@@ -1,0 +1,26 @@
+# ===================================================
+# ALI HOTEL - HOSTINGER SERVER REWRITE CONFIGURATION
+# ===================================================
+DirectoryIndex index.html
+
+# Disable Directory Browsing for Security
+Options -Indexes
+Options +FollowSymLinks
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. BLOCK ALL ACCESS TO /admin AND /admin.html (redirects to home)
+    RewriteRule ^admin(\.html)?$ / [R=301,L]
+
+    # 2. MAP /ali TO ali.html SEAMLESSLY (URL stays https://alihotelkaliyar.in/ali)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ali/?$ ali.html [L,QSA]
+
+    # 3. Clean URLs for public pages (e.g. /rooms -> rooms.html, /gallery -> gallery.html)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}\.html -f
+    RewriteRule ^([^\.]+)$ $1.html [NC,L]
+</IfModule>
